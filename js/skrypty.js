@@ -7,10 +7,10 @@ Site.init = function() {
 	$.mobile.allowCrossDomainPages = true;
 	$.mobile.defaultPageTransition  = 'flip';
 	if (!localStorage.atrakcje) {
-		console.log('Wgrywam dane z serwera');
+		alert('Wgrywam dane z serwera');
 		Site.wczytajDane();
 	} else {
-		console.log('Mam dane z serwera');
+		alert('Mam dane z serwera');
 		//if (plikURL()=='index.html') {
 			//$.mobile.navigate( "main.html" );
 		//} else {
@@ -19,7 +19,10 @@ Site.init = function() {
 			this.generateList();
 		//}
 	}
-	$("div[data-role='content']").height(($( window ).height()-40)+'px');
+	$( window ).resize(function() {
+		resize();
+	});
+	resize();
 	var szer=$( "div[data-role='okno']" , $("div[data-role='ekran']")).length*$( "div[data-role='okno']").outerWidth(true);
 	$("div[data-role='ekran']").width(szer+'px');
 };
@@ -55,7 +58,9 @@ Site.wczytajDane = function () {
 		$.mobile.loading("hide");
 	});
 };
-
+function resize() {
+	$("div[data-role='content']").height(($( window ).height())+'px');
+}
 function plikURL() {
     var loc = window.location;
     var pathName = loc.pathname.substring(loc.pathname.lastIndexOf('/') + 1);
