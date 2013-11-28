@@ -16,16 +16,14 @@ margin:0px;
 	}
 div[data-role="content"] {
 	width: 100%;
-	overflow: hidden;
-	overflow-x: scroll;
 	white-space: nowrap;
 	padding:0px;
+	overflow: hidden;
+	overflow-x: scroll;
 }
 div[data-role="ekran"] {
-	/*width:1300px;*/
 	overflow:visible;
 	height:inherit;
-	
 }
 div[data-role="okno"] {
 	float: left;
@@ -33,12 +31,15 @@ div[data-role="okno"] {
 	width: 600px;
 	height:inherit;
 	margin-right:20px;
-	overflow: hidden;
-	overflow-y: auto;
 }
 div[data-role="okno"]:last-child {
 margin-right:0px;
 }
+div[data-role="wnetrze"] {
+	overflow: hidden;
+	overflow-y: auto;
+	padding:10px;
+}	
 /*
  * GRID
  */

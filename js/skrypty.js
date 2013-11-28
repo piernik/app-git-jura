@@ -7,10 +7,10 @@ Site.init = function() {
 	$.mobile.allowCrossDomainPages = true;
 	$.mobile.defaultPageTransition  = 'flip';
 	if (!localStorage.atrakcje) {
-		alert('Wgrywam dane z serwera');
+		//alert('Wgrywam dane z serwera');
 		Site.wczytajDane();
 	} else {
-		alert('Mam dane z serwera');
+		//alert('Mam dane lokalnie');
 		//if (plikURL()=='index.html') {
 			//$.mobile.navigate( "main.html" );
 		//} else {
@@ -25,6 +25,7 @@ Site.init = function() {
 	resize();
 	var szer=$( "div[data-role='okno']" , $("div[data-role='ekran']")).length*$( "div[data-role='okno']").outerWidth(true);
 	$("div[data-role='ekran']").width(szer+'px');
+	$("div[data-role='wnetrze']").height(($("div[data-role='okno']").height()-$("div[data-role='okno'] h2").outerHeight(true)-50)+'px');
 };
 Site.generateList = function() {
 	for (a in this.atrakcje) {
