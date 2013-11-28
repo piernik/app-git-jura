@@ -11,13 +11,13 @@ Site.init = function() {
 		Site.wczytajDane();
 	} else {
 		console.log('Mam dane z serwera');
-		if (plikURL()=='index.html') {
-			$.mobile.navigate( "main.html" );
-		} else {
+		//if (plikURL()=='index.html') {
+			//$.mobile.navigate( "main.html" );
+		//} else {
 			//alert(localStorage.atrakcje);
 			this.atrakcje=JSON.parse(localStorage.atrakcje);
 			this.generateList();
-		}
+		//}
 	}
 	$("div[data-role='content']").height(($( window ).height()-40)+'px');
 	var szer=$( "div[data-role='okno']" , $("div[data-role='ekran']")).length*$( "div[data-role='okno']").outerWidth(true);
