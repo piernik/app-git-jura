@@ -16,6 +16,7 @@ Site.init = function() {
 		//} else {
 			//alert(localStorage.atrakcje);
 			this.atrakcje=JSON.parse(localStorage.atrakcje);
+			this.generatePolecamy();
 			this.generateList();
 		//}
 	}
@@ -26,6 +27,20 @@ Site.init = function() {
 	var szer=$( "div[data-role='okno']" , $("div[data-role='ekran']")).length*$( "div[data-role='okno']").outerWidth(true);
 	$("div[data-role='ekran']").width(szer+'px');
 	$("div[data-role='wnetrze']").height(($("div[data-role='okno']").height()-$("div[data-role='okno'] h2").outerHeight(true)-50)+'px');
+};
+Site.generatePolecamy = function() {
+	var i=0;
+	for (a in this.atrakcje) {
+		if (this.atrakcje[a].wyrozniony) {
+			i++;
+			var inner = $('<a><img src="' + this.atrakcje[a].zdjecia.lista_glowna + '"> ' + '<h2>' + this.atrakcje[a].tytul + '</h2></a>');
+			var div = $("<div></div>").append(inner);
+			if (i%2==0) var cl="grid-1";
+			else var cl="grid-2";
+			$(div).addClass(cl);
+			$(".polecamy").append(div);
+		}
+	}
 };
 Site.generateList = function() {
 	for (a in this.atrakcje) {

@@ -28,7 +28,7 @@ div[data-role="ekran"] {
 div[data-role="okno"] {
 	float: left;
 	/*text-align: left;*/
-	width: 600px;
+	width: 620px;
 	height:inherit;
 	margin-right:20px;
 }
@@ -38,8 +38,37 @@ margin-right:0px;
 div[data-role="wnetrze"] {
 	overflow: hidden;
 	overflow-y: auto;
-	padding:10px;
+	padding:5px;
 }	
+.grid {
+  
+}
+.grid>div {
+	float:left;
+	overflow: hidden;
+	margin-bottom:10px;
+}
+.grid>div:nth-child(2n) {
+	margin-left:10px;
+	}
+.polecamy a{
+	display:block;
+	white-space: normal;
+}
+.polecamy div {
+	position:relative;
+	width:300px;
+	height:200px;
+}
+.polecamy div h2 {
+	padding:10px;
+	margin:0px;
+	font-size:1em;
+	position:absolute;
+	bottom:0px;
+	left:0px;
+	background:rgba(255,255,255,0.8);
+}
 /*
  * GRID
  */
