@@ -26,7 +26,7 @@ Site.init = function() {
 		Site.id_atrakcji=localStorage.id;
 		localStorage.removeItem('id');
 		if (Site.id_atrakcji) {
-			Site.pokazAtrakcje();
+			Site.wczytajDaneAtrakcji();
 		}
   }); 
 	
@@ -51,9 +51,42 @@ Site.init = function() {
 	$("div[data-role='ekran']").width(szer + 'px');
 	$("div[data-role='wnetrze']").height(($("div[data-role='okno']").height() - $("div[data-role='okno'] h2").outerHeight(true) - 50) + 'px');
 };
+Site.wczytajDaneAtrakcji=function() {
+	//
+	if (this.atrakcje[this.id_atrakcji].pelne_dane) {
+		Site.pokazAtrakcje();
+	} else {
+		$.mobile.loading("show", {
+			text : "Pobieram dane atrakcji",
+			textVisible : true,
+			theme : "a",
+			html : ""
+		});
+		$.ajax({
+			url : "http://www.polskieszlaki.pl/_a_dane.php?id_atrakcji="+this.atrakcje[this.id_atrakcji].id,
+			dataType : "json",
+		}).done(function(dane) {
+			//alert(dane);
+			//alert('mam');
+			Site.atrakcje[Site.id_atrakcji].pelne_dane=true;
+			Site.atrakcje[Site.id_atrakcji].tresc=dane.tresc;
+			Site.atrakcje[Site.id_atrakcji].szer_geogr=dane.szer_geogr;
+			Site.atrakcje[Site.id_atrakcji].dl_geogr=dane.dl_geogr;
+			Site.pokazAtrakcje();
+			//$(".strona").show();
+			//$(".wgrywam").hide('fast');
+			//localStorage.atrakcje = JSON.stringify(dane);
+			//Site.atrakcje = dane;
+			//Site.generateList();
+			//alert(this.atrakcje);
+			$.mobile.loading("hide");
+		});
+	}
+};
 Site.pokazAtrakcje=function() {
 	this.atrakcja=this.atrakcje[this.id_atrakcji];
 	$("div[data-role='header'] h1").html(this.atrakcja.tytul);
+	$("div.tresc").html(this.atrakcja.tresc);
 };
 Site.generatePolecamy = function() {
 	var i = 0;
@@ -82,7 +115,7 @@ Site.generateList = function() {
 };
 Site.wczytajDane = function() {
 	$.mobile.loading("show", {
-		text : "Wczytuję",
+		text : "Pobieram listę atrakcji",
 		textVisible : true,
 		theme : "a",
 		html : ""
