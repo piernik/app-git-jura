@@ -81,13 +81,13 @@ Site.wczytajDaneAtrakcji = function() {
 	}
 };
 Site.pokazAtrakcje = function() {
-	alert('Pokazuję atrakcję: '+this.id_atrakcji);
-	var page=$(".ui-page-active[data-role='page']");
+	//alert('Pokazuję atrakcję: '+this.id_atrakcji);
+	//var page=$(".ui-page-active[data-role='page']");
 	this.atrakcja = this.atrakcje[this.id_atrakcji];
-	$("div[data-role='header'] h1", page).html(this.atrakcja.tytul);
-	$("div.tresc", page).html(this.atrakcja.tresc);
+	$(".ui-page-active div[data-role='header'] h1").html(this.atrakcja.tytul);
+	$(".ui-page-active div.tresc").html(this.atrakcja.tresc);
 	//alert(this.atrakcja.zdjecia.hero);
-	$(".hero", page).css("background-image","url("+this.atrakcja.zdjecia.hero+")");
+	$(".ui-page-active .hero").css("background-image","url("+this.atrakcja.zdjecia.hero+")");
 	resize();
 };
 Site.generatePolecamy = function() {
@@ -142,12 +142,12 @@ Site.wczytajDane = function() {
 	});
 };
 function resize() {
-	var page=$(".ui-page-active[data-role='page']");
-	$("div[data-role='content']", page).height(($(window).height()) + 'px');
-	var szer = $("div[data-role='okno']", page).length * $("div[data-role='okno']", page).outerWidth(true);
-	alert($("div[data-role='okno']", page).length+' '+$("div[data-role='okno']", page).outerWidth(true));
-	$("div[data-role='ekran']", page).width(szer + 'px');
-	$("div[data-role='wnetrze']", page).height(($("div[data-role='okno']", page).height() - $("div[data-role='okno'] h2", page).outerHeight(true) - 50) + 'px');
+	//var page=$(".ui-page-active[data-role='page']");
+	$(".ui-page-active div[data-role='content']").height(($(window).height()) + 'px');
+	var szer = $(".ui-page-active div[data-role='okno']").length * $(".ui-page-active div[data-role='okno']").outerWidth(true);
+	alert($(".ui-page-active div[data-role='okno']").length+' '+$(".ui-page-active div[data-role='okno']").outerWidth(true));
+	$(".ui-page-active div[data-role='ekran']").width(szer + 'px');
+	$(".ui-page-active div[data-role='wnetrze']").height(($(".ui-page-active div[data-role='okno']").height() - $(".ui-page-active div[data-role='okno'] h2").outerHeight(true) - 50) + 'px');
 }
 
 function plikURL() {
