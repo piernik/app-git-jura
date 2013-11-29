@@ -174,10 +174,10 @@ function resize() {
 	//alert(szer);
 	$(".ui-page-active div[data-role='ekran']").width(szer + 'px');
 	//wysOkna=$(".ui-page-active div[data-role='okno']").height();
-	alert(wysOkna);
+	//alert(wysOkna);
 	//alert($(".ui-page-active div[data-role='okno'] h2").outerHeight(true));
-	$(".ui-page-active div[data-role='wnetrze']").height((wysOkna - $(".ui-page-active div[data-role='okno'] h2").outerHeight(true) - 50) + 'px');
-	alert($(".ui-page-active div[data-role='wnetrze']").height());
+	$(".ui-page-active div[data-role='wnetrze']").height((wysOkna - $(".ui-page-active div[data-role='okno'] h2").outerHeight(true)) + 'px');
+	//alert($(".ui-page-active div[data-role='wnetrze']").height());
 }
 
 function plikURL() {
