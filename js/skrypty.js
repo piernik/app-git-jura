@@ -3,7 +3,7 @@ Site = {
 	id_atrakcji : null,
 	atrakcja : null,
 };
-localStorage.removeItem( 'atrakcje');
+//localStorage.removeItem( 'atrakcje');
 Site.init = function() {
 	$.support.cors = true;
 	$.mobile.allowCrossDomainPages = true;
