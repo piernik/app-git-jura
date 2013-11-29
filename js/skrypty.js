@@ -89,7 +89,7 @@ Site.pokazAtrakcje = function() {
 	$(".ui-page-active div.tresc").html(this.atrakcja.tresc);
 	//alert(this.atrakcja.zdjecia.hero);
 	//$(".ui-page-active .hero").css("background-image","url("+this.atrakcja.zdjecia.hero+")");
-	setTimeout("Site.uluzAtrakcje()",100);
+	setTimeout("Site.uluzAtrakcje()",1000);
 };
 Site.uluzAtrakcje = function() {
 	resize();
