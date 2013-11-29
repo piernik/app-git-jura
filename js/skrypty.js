@@ -83,23 +83,23 @@ Site.wczytajDaneAtrakcji = function() {
 };
 Site.pokazAtrakcje = function() {
 	//alert('Pokazuję atrakcję: '+this.id_atrakcji);
-	var page=$(".ui-page-active[data-role='page']");
+	//var page=$(".ui-page-active[data-role='page']");
 	this.atrakcja = this.atrakcje[this.id_atrakcji];
 	$(".ui-page-active div[data-role='header'] h1").html(this.atrakcja.tytul);
 	$(".ui-page-active div.tresc").html(this.atrakcja.tresc);
 	//alert(this.atrakcja.zdjecia.hero);
 	$(".ui-page-active .hero").css("background-image","url("+this.atrakcja.zdjecia.hero+")");
 	resize();
-	var wysTresci=$("div.tresc", page).height();
-	var wysOkna=$("div.tresc", page).parent().height();
-	var podstSzerOkna=$("div.tresc", page).parent().parent().width();
+	var wysTresci=$(".ui-page-active div.tresc").height();
+	var wysOkna=$(".ui-page-active div.tresc").parent().height();
+	var podstSzerOkna=$(".ui-page-active div.tresc").parent().parent().width();
 	if (wysTresci>wysOkna) {
 		var ileRazy=Math.ceil(wysTresci/wysOkna);
 		//alert(ileRazy);
-		$("div.tresc", page).parent().parent().width(podstSzerOkna*ileRazy+'px');
+		$(".ui-page-active div.tresc").parent().parent().width(podstSzerOkna*ileRazy+'px');
 		resize();
 		//$("div.tresc", page).css("-webkit-column-count",ileRazy);
-		$("div.tresc", page).attr("style","-webkit-column-count:"+ileRazy);
+		$(".ui-page-active div.tresc").attr("style","-webkit-column-count:"+ileRazy);
 	}
 	
 };
