@@ -3,20 +3,16 @@ Site = {
 	id_atrakcji : null,
 	atrakcja : null,
 };
-//localStorage.removeItem( 'atrakcje');
+localStorage.removeItem( 'atrakcje');
 Site.init = function() {
 	$.support.cors = true;
 	$.mobile.allowCrossDomainPages = true;
 	$.mobile.defaultPageTransition = 'slide';
 	if (!localStorage.atrakcje) {
-		//alert('Wgrywam dane z serwera');
+		alert('Wgrywam dane z serwera');
 		Site.wczytajDane();
 	} else {
-		//alert('Mam dane lokalnie');
-		//if (plikURL()=='index.html') {
-		//$.mobile.navigate( "main.html" );
-		//} else {
-		//alert(localStorage.atrakcje);
+		alert('Mam dane lokalnie');
 		this.atrakcje = JSON.parse(localStorage.atrakcje);
 		this.generatePolecamy();
 		this.generateList();
@@ -147,8 +143,7 @@ function resize() {
 	var page=$(".ui-page-active[data-role='page']");
 	$("div[data-role='content']", page).height(($(window).height()) + 'px');
 	var szer = $("div[data-role='okno']", page).length * $("div[data-role='okno']", page).outerWidth(true);
-	//alert($("div[data-role='okno']", page).length);
-	//alert($("div[data-role='okno']", page).outerWidth(true));
+	alert($("div[data-role='okno']", page).length+' '+$("div[data-role='okno']", page).outerWidth(true));
 	$("div[data-role='ekran']", page).width(szer + 'px');
 	$("div[data-role='wnetrze']", page).height(($("div[data-role='okno']", page).height() - $("div[data-role='okno'] h2", page).outerHeight(true) - 50) + 'px');
 }
