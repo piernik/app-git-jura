@@ -81,9 +81,7 @@ Site.pokazAtrakcje = function() {
 	//var page=$(".ui-page-active[data-role='page']");
 	this.atrakcja = this.atrakcje[this.id_atrakcji];
 	$(".ui-page-active div[data-role='header'] h1").html(this.atrakcja.tytul);
-	$(".ui-page-active div.tresc").html(this.atrakcja.tresc);
-	//alert(this.atrakcja.zdjecia.hero);
-	//setTimeout("Site.uluzAtrakcje()",1000);
+	$(".ui-page-active div.tresc .txt").html(this.atrakcja.tresc);
 	resize();
 	var wysTresci = $(".ui-page-active div.tresc").height();
 	var wysOkna = $(".ui-page-active div.tresc").parent().height();
@@ -91,21 +89,17 @@ Site.pokazAtrakcje = function() {
 	//alert(wysTresci+' '+wysOkna+' '+podstSzerOkna);
 	if (wysTresci > wysOkna) {
 		var ileRazy = Math.ceil(wysTresci / wysOkna);
-		//alert(ileRazy);
 		$(".ui-page-active div.tresc").parent().parent().width(podstSzerOkna * ileRazy + 'px');
 		resize();
-		//$("div.tresc", page).css("-webkit-column-count",ileRazy);
 		$(".ui-page-active div.tresc").attr("style", "-webkit-column-count:" + ileRazy);
 	}
 	$(".ui-page-active .hero").css("background-image", "url(" + this.atrakcja.zdjecia.hero + ")");
-
 	if (this.atrakcja.szer_geogr) {
 		this.mapaGoogle();
 	}
 };
 Site.mapaGoogle = function() {
 	var myLatLng = new google.maps.LatLng(this.atrakcja.szer_geogr, this.atrakcja.dl_geogr);
-	//alert(myLatLng);
 	var myOptions = {
 		zoom : 15,
 		center : myLatLng,
@@ -187,7 +181,7 @@ function resize() {
 	//wysOkna=$(".ui-page-active div[data-role='okno']").height();
 	//alert(wysOkna);
 	//alert($(".ui-page-active div[data-role='okno'] h2").outerHeight(true));
-	$(".ui-page-active div[data-role='wnetrze']").height((wysOkna - $(".ui-page-active div[data-role='okno'] h2").outerHeight(true) + 5) + 'px');
+	$(".ui-page-active div[data-role='wnetrze']").height((wysOkna - $(".ui-page-active div[data-role='okno'] h2").outerHeight(true) + 0) + 'px');
 	//alert($(".ui-page-active div[data-role='wnetrze']").height());
 }
 
