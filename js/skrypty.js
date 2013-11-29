@@ -187,7 +187,7 @@ function resize() {
 	//wysOkna=$(".ui-page-active div[data-role='okno']").height();
 	//alert(wysOkna);
 	//alert($(".ui-page-active div[data-role='okno'] h2").outerHeight(true));
-	$(".ui-page-active div[data-role='wnetrze']").height((wysOkna - $(".ui-page-active div[data-role='okno'] h2").outerHeight(true) + 10) + 'px');
+	$(".ui-page-active div[data-role='wnetrze']").height((wysOkna - $(".ui-page-active div[data-role='okno'] h2").outerHeight(true) + 5) + 'px');
 	//alert($(".ui-page-active div[data-role='wnetrze']").height());
 }
 
