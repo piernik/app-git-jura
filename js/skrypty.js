@@ -89,6 +89,9 @@ Site.pokazAtrakcje = function() {
 	$(".ui-page-active div.tresc").html(this.atrakcja.tresc);
 	//alert(this.atrakcja.zdjecia.hero);
 	$(".ui-page-active .hero").css("background-image","url("+this.atrakcja.zdjecia.hero+")");
+	setTimeout("Site.uluzAtrakcje()",100);
+};
+Site.uluzAtrakcje = function() {
 	resize();
 	var wysTresci=$(".ui-page-active div.tresc").height();
 	var wysOkna=$(".ui-page-active div.tresc").parent().height();
@@ -102,8 +105,7 @@ Site.pokazAtrakcje = function() {
 		//$("div.tresc", page).css("-webkit-column-count",ileRazy);
 		$(".ui-page-active div.tresc").attr("style","-webkit-column-count:"+ileRazy);
 	}
-	
-};
+}; 
 Site.generatePolecamy = function() {
 	var i = 0;
 	for (a in this.atrakcje) {
