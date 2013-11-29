@@ -6,6 +6,21 @@ a {
 	background-image: url(images/hero/ogrodzieniec.jpg);
 	background-size:cover;
 	background-position-x: 50%;
+	position:relative;
+}
+.hero .logo {
+	position:absolute;
+	right:20px;
+	top:20px;
+}
+.hero h1 {
+	position:absolute;
+	padding:20px;
+	font-size:3em;
+	margin:0px;
+	bottom:0px;
+	background:rgba(255,255,255,0.8);
+	border-top-right-radius:10px;
 }
 .ui-grid-a, .ui-grid-b, .ui-grid-c, .ui-grid-d {
 	overflow: visible;
