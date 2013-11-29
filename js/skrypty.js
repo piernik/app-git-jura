@@ -169,6 +169,8 @@ function resize() {
 	//alert($(".ui-page-active div[data-role='okno']").length+' '+$(".ui-page-active div[data-role='okno']").outerWidth(true));
 	//alert(szer);
 	$(".ui-page-active div[data-role='ekran']").width(szer + 'px');
+	alert($(".ui-page-active div[data-role='okno']").height());
+	alert($(".ui-page-active div[data-role='okno'] h2").outerHeight(true));
 	$(".ui-page-active div[data-role='wnetrze']").height(($(".ui-page-active div[data-role='okno']").height() - $(".ui-page-active div[data-role='okno'] h2").outerHeight(true) - 50) + 'px');
 	alert($(".ui-page-active div[data-role='wnetrze']").height());
 }
