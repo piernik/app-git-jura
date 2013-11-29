@@ -103,6 +103,10 @@ div[data-role="wnetrze"] {
 	left:0px;
 	background:rgba(255,255,255,0.8);
 }
+#google_maps {
+	width:100%;
+	height:100%;
+}
 @media all and (max-width: 480px){
 	div[data-role="okno"] {
 		width: 400px;

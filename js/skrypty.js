@@ -3,6 +3,8 @@ Site = {
 	id_atrakcji : null,
 	atrakcja : null,
 };
+var mapa;
+var marker;
 //localStorage.removeItem( 'atrakcje');
 Site.init = function() {
 	$.support.cors = true;
@@ -65,18 +67,11 @@ Site.wczytajDaneAtrakcji = function() {
 			dataType : "json",
 		}).done(function(dane) {
 			//alert(dane);
-			//alert('mam');
 			Site.atrakcje[Site.id_atrakcji].pelne_dane = true;
 			Site.atrakcje[Site.id_atrakcji].tresc = dane.tresc;
 			Site.atrakcje[Site.id_atrakcji].szer_geogr = dane.szer_geogr;
 			Site.atrakcje[Site.id_atrakcji].dl_geogr = dane.dl_geogr;
 			Site.pokazAtrakcje();
-			//$(".strona").show();
-			//$(".wgrywam").hide('fast');
-			//localStorage.atrakcje = JSON.stringify(dane);
-			//Site.atrakcje = dane;
-			//Site.generateList();
-			//alert(this.atrakcje);
 			$.mobile.loading("hide");
 		});
 	}
@@ -90,23 +85,39 @@ Site.pokazAtrakcje = function() {
 	//alert(this.atrakcja.zdjecia.hero);
 	//setTimeout("Site.uluzAtrakcje()",1000);
 	resize();
-	var wysTresci=$(".ui-page-active div.tresc").height();
-	var wysOkna=$(".ui-page-active div.tresc").parent().height();
-	var podstSzerOkna=$(".ui-page-active div.tresc").parent().parent().width();
+	var wysTresci = $(".ui-page-active div.tresc").height();
+	var wysOkna = $(".ui-page-active div.tresc").parent().height();
+	var podstSzerOkna = $(".ui-page-active div.tresc").parent().parent().width();
 	//alert(wysTresci+' '+wysOkna+' '+podstSzerOkna);
-	if (wysTresci>wysOkna) {
-		var ileRazy=Math.ceil(wysTresci/wysOkna);
+	if (wysTresci > wysOkna) {
+		var ileRazy = Math.ceil(wysTresci / wysOkna);
 		//alert(ileRazy);
-		$(".ui-page-active div.tresc").parent().parent().width(podstSzerOkna*ileRazy+'px');
+		$(".ui-page-active div.tresc").parent().parent().width(podstSzerOkna * ileRazy + 'px');
 		resize();
 		//$("div.tresc", page).css("-webkit-column-count",ileRazy);
-		$(".ui-page-active div.tresc").attr("style","-webkit-column-count:"+ileRazy);
+		$(".ui-page-active div.tresc").attr("style", "-webkit-column-count:" + ileRazy);
 	}
-	$(".ui-page-active .hero").css("background-image","url("+this.atrakcja.zdjecia.hero+")");
+	$(".ui-page-active .hero").css("background-image", "url(" + this.atrakcja.zdjecia.hero + ")");
+
+	if (this.atrakcja.szer_geogr) {
+		this.mapaGoogle();
+	}
 };
-Site.uluzAtrakcje = function() {
-	
-}; 
+Site.mapaGoogle = function() {
+	var myLatLng = new google.maps.LatLng(this.atrakcja.szer_geogr, this.atrakcja.dl_geogr);
+	//alert(myLatLng);
+	var myOptions = {
+		zoom : 15,
+		center : myLatLng,
+		mapTypeId : google.maps.MapTypeId.ROADMAP,
+	};
+	map = new google.maps.Map(document.getElementById("google_maps"), myOptions);
+	var point = myLatLng;
+	marker = new google.maps.Marker({
+		position : point,
+		map : map,
+	});
+};
 Site.generatePolecamy = function() {
 	var i = 0;
 	for (a in this.atrakcje) {
@@ -115,12 +126,12 @@ Site.generatePolecamy = function() {
 			var inner = $('<a href="atrakcja.html?id=' + a + '"><img src="' + this.atrakcje[a].zdjecia.lista_glowna + '"> ' + '<h2>' + this.atrakcje[a].tytul + '</h2></a>');
 			var div = $("<div></div>").append(inner);
 			/*
-			if (i % 2 == 0)
-				var cl = "grid-1";
-			else
-				var cl = "grid-2";
-			$(div).addClass(cl);
-			*/
+			 if (i % 2 == 0)
+			 var cl = "grid-1";
+			 else
+			 var cl = "grid-2";
+			 $(div).addClass(cl);
+			 */
 			$(".polecamy").append(div);
 		}
 	}
@@ -161,14 +172,14 @@ Site.wczytajDane = function() {
 function resize() {
 	//var page=$(".ui-page-active[data-role='page']");
 	$(".ui-page-active div[data-role='content']").height(($(window).height()) + 'px');
-	var szer=0;
+	var szer = 0;
 	//var wysOkna=0;
-	var wysOkna=$(window).height();
-	$(".ui-page-active div[data-role='okno']").each(function (index) {
-		szer+=$(this).outerWidth(true);
+	var wysOkna = $(window).height();
+	$(".ui-page-active div[data-role='okno']").each(function(index) {
+		szer += $(this).outerWidth(true);
 		//if ($(this).height()>wysOkna) wysOkna=$(this).height();
 	});
-	
+
 	//var szer = $(".ui-page-active div[data-role='okno']").length * $(".ui-page-active div[data-role='okno']").outerWidth(true);
 	//alert($(".ui-page-active div[data-role='okno']").length+' '+$(".ui-page-active div[data-role='okno']").outerWidth(true));
 	//alert(szer);
@@ -176,7 +187,7 @@ function resize() {
 	//wysOkna=$(".ui-page-active div[data-role='okno']").height();
 	//alert(wysOkna);
 	//alert($(".ui-page-active div[data-role='okno'] h2").outerHeight(true));
-	$(".ui-page-active div[data-role='wnetrze']").height((wysOkna - $(".ui-page-active div[data-role='okno'] h2").outerHeight(true)) + 'px');
+	$(".ui-page-active div[data-role='wnetrze']").height((wysOkna - $(".ui-page-active div[data-role='okno'] h2").outerHeight(true) + 5) + 'px');
 	//alert($(".ui-page-active div[data-role='wnetrze']").height());
 }
 
