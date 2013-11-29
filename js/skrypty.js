@@ -9,16 +9,22 @@ Site.init = function() {
 	$.mobile.allowCrossDomainPages = true;
 	$.mobile.defaultPageTransition = 'slide';
 	if (!localStorage.atrakcje) {
-		alert('Wgrywam dane z serwera');
+		//alert('Wgrywam dane z serwera');
 		Site.wczytajDane();
 	} else {
-		alert('Mam dane lokalnie');
+		//alert('Mam dane lokalnie');
 		this.atrakcje = JSON.parse(localStorage.atrakcje);
 		this.generatePolecamy();
 		this.generateList();
 		//}
 	}
-	$(document).on('pagebeforeshow', function() {
+	$(document).on('pagebeforechange', function() {
+	//alert("pagebeforechange");
+	});
+	$(document).on('pagebeforechange', function() {
+	//alert("pagebeforecreate");
+	});
+	$(document).on('pagechange', function() {
 		Site.id_atrakcji = localStorage.id;
 		localStorage.removeItem('id');
 		if (Site.id_atrakcji) {
@@ -50,6 +56,7 @@ Site.init = function() {
 Site.wczytajDaneAtrakcji = function() {
 	//
 	if (this.atrakcje[this.id_atrakcji].pelne_dane) {
+		alert('Mam dane atrakcji');
 		Site.pokazAtrakcje();
 	} else {
 		alert('Wgrywam dane atrakcji z serwera');
@@ -81,7 +88,7 @@ Site.wczytajDaneAtrakcji = function() {
 	}
 };
 Site.pokazAtrakcje = function() {
-	//alert('Pokazuję atrakcję: '+this.id_atrakcji);
+	alert('Pokazuję atrakcję: '+this.id_atrakcji);
 	//var page=$(".ui-page-active[data-role='page']");
 	this.atrakcja = this.atrakcje[this.id_atrakcji];
 	$(".ui-page-active div[data-role='header'] h1").html(this.atrakcja.tytul);
