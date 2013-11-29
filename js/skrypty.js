@@ -52,6 +52,7 @@ Site.wczytajDaneAtrakcji = function() {
 	if (this.atrakcje[this.id_atrakcji].pelne_dane) {
 		Site.pokazAtrakcje();
 	} else {
+		alert('Wgrywam dane atrakcji z serwera');
 		$.mobile.loading("show", {
 			text : "Pobieram dane atrakcji",
 			textVisible : true,
@@ -80,6 +81,7 @@ Site.wczytajDaneAtrakcji = function() {
 	}
 };
 Site.pokazAtrakcje = function() {
+	alert('Pokazuję atrakcję: '+this.id_atrakcji);
 	var page=$(".ui-page-active[data-role='page']");
 	this.atrakcja = this.atrakcje[this.id_atrakcji];
 	$("div[data-role='header'] h1", page).html(this.atrakcja.tytul);
