@@ -22,7 +22,7 @@ Site.init = function() {
 	}
 	$(document).on('pagechange', function() {
 		Site.id_atrakcji = localStorage.id;
-		localStorage.removeItem('id');
+		//localStorage.removeItem('id');
 		if (Site.id_atrakcji) {
 			Site.wczytajDaneAtrakcji();
 		}
@@ -99,7 +99,7 @@ Site.pokazAtrakcje = function() {
 	}
 };
 Site.mapaGoogle = function() {
-	$("#google_maps a").attr("href","geo:"+this.atrakcja.szer_geogr+","+this.atrakcja.dl_geogr);
+	$("#google_maps a").attr("href","geo:"+this.atrakcja.szer_geogr+","+this.atrakcja.dl_geogr+"?z=15");
 	var imgSrc="http://maps.googleapis.com/maps/api/staticmap?center="+this.atrakcja.szer_geogr+","+this.atrakcja.dl_geogr+"&zoom=15&size=300x200&maptype=roadmap&markers=color:blue%7C"+this.atrakcja.szer_geogr+","+this.atrakcja.dl_geogr+"&sensor=false";
 	var img=$("<img src='"+imgSrc+"'/>");
 	$("#google_maps a").append(img);

@@ -107,6 +107,9 @@ div[data-role="wnetrze"] {
 	width:100%;
 	height:200px;
 }
+#google_maps img {
+	width:100%;
+}
 @media all and (max-width: 480px){
 	div[data-role="okno"] {
 		width: 400px;
