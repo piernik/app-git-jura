@@ -1,7 +1,7 @@
 Site = {
 	atrakcje : null,
-	id_atrakcji:null,
-	atrakcja:null,
+	id_atrakcji : null,
+	atrakcja : null,
 };
 //localStorage.removeItem( 'atrakcje');
 Site.init = function() {
@@ -22,22 +22,22 @@ Site.init = function() {
 		this.generateList();
 		//}
 	}
-	$(document).on('pagebeforeshow', function () {
-		Site.id_atrakcji=localStorage.id;
+	$(document).on('pagebeforeshow', function() {
+		Site.id_atrakcji = localStorage.id;
 		localStorage.removeItem('id');
 		if (Site.id_atrakcji) {
 			Site.wczytajDaneAtrakcji();
 		}
-  }); 
-	
+	});
+
 	$("a").on("click", function(event) {
 		event.preventDefault();
-		var href=$(this).attr("href");
-		
+		var href = $(this).attr("href");
+
 		var url = href.split("?");
 		var parameters = url[1].split("&");
 		for (var p in parameters) {
-			var s=parameters[p].split("=");
+			var s = parameters[p].split("=");
 			localStorage[s[0]] = s[1];
 			//alert(localStorage.id);
 		}
@@ -46,12 +46,12 @@ Site.init = function() {
 	$(window).resize(function() {
 		resize();
 	});
-	$( window ).on( "orientationchange", function( event ) {
+	$(window).on("orientationchange", function(event) {
 		resize();
 	});
 	resize();
 };
-Site.wczytajDaneAtrakcji=function() {
+Site.wczytajDaneAtrakcji = function() {
 	//
 	if (this.atrakcje[this.id_atrakcji].pelne_dane) {
 		Site.pokazAtrakcje();
@@ -63,15 +63,15 @@ Site.wczytajDaneAtrakcji=function() {
 			html : ""
 		});
 		$.ajax({
-			url : "http://www.polskieszlaki.pl/_a_dane.php?id_atrakcji="+this.atrakcje[this.id_atrakcji].id,
+			url : "http://www.polskieszlaki.pl/_a_dane.php?id_atrakcji=" + this.atrakcje[this.id_atrakcji].id,
 			dataType : "json",
 		}).done(function(dane) {
 			//alert(dane);
 			//alert('mam');
-			Site.atrakcje[Site.id_atrakcji].pelne_dane=true;
-			Site.atrakcje[Site.id_atrakcji].tresc=dane.tresc;
-			Site.atrakcje[Site.id_atrakcji].szer_geogr=dane.szer_geogr;
-			Site.atrakcje[Site.id_atrakcji].dl_geogr=dane.dl_geogr;
+			Site.atrakcje[Site.id_atrakcji].pelne_dane = true;
+			Site.atrakcje[Site.id_atrakcji].tresc = dane.tresc;
+			Site.atrakcje[Site.id_atrakcji].szer_geogr = dane.szer_geogr;
+			Site.atrakcje[Site.id_atrakcji].dl_geogr = dane.dl_geogr;
 			Site.pokazAtrakcje();
 			//$(".strona").show();
 			//$(".wgrywam").hide('fast');
@@ -83,10 +83,14 @@ Site.wczytajDaneAtrakcji=function() {
 		});
 	}
 };
-Site.pokazAtrakcje=function() {
-	this.atrakcja=this.atrakcje[this.id_atrakcji];
-	$("div[data-role='header'] h1").html(this.atrakcja.tytul);
-	$("div.tresc").html(this.atrakcja.tresc);
+Site.pokazAtrakcje = function() {
+	var page=$(".ui-page-active[data-role='page']");
+	this.atrakcja = this.atrakcje[this.id_atrakcji];
+	$("div[data-role='header'] h1", page).html(this.atrakcja.tytul);
+	$("div.tresc", page).html(this.atrakcja.tresc);
+	//alert(this.atrakcja.zdjecia.hero);
+	$(".hero", page).css("background-image","url("+this.atrakcja.zdjecia.hero+")");
+	resize();
 };
 Site.generatePolecamy = function() {
 	var i = 0;
@@ -95,11 +99,13 @@ Site.generatePolecamy = function() {
 			i++;
 			var inner = $('<a href="atrakcja.html?id=' + a + '"><img src="' + this.atrakcje[a].zdjecia.lista_glowna + '"> ' + '<h2>' + this.atrakcje[a].tytul + '</h2></a>');
 			var div = $("<div></div>").append(inner);
+			/*
 			if (i % 2 == 0)
 				var cl = "grid-1";
 			else
 				var cl = "grid-2";
 			$(div).addClass(cl);
+			*/
 			$(".polecamy").append(div);
 		}
 	}
@@ -131,16 +137,20 @@ Site.wczytajDane = function() {
 		//$(".wgrywam").hide('fast');
 		localStorage.atrakcje = JSON.stringify(dane);
 		Site.atrakcje = dane;
+		Site.generatePolecamy();
 		Site.generateList();
 		//alert(this.atrakcje);
 		$.mobile.loading("hide");
 	});
 };
 function resize() {
-	$("div[data-role='content']").height(($(window).height()) + 'px');
-	var szer = $("div[data-role='okno']", $("div[data-role='ekran']")).length * $("div[data-role='okno']").outerWidth(true);
-	$("div[data-role='ekran']").width(szer + 'px');
-	$("div[data-role='wnetrze']").height(($("div[data-role='okno']").height() - $("div[data-role='okno'] h2").outerHeight(true) - 50) + 'px');
+	var page=$(".ui-page-active[data-role='page']");
+	$("div[data-role='content']", page).height(($(window).height()) + 'px');
+	var szer = $("div[data-role='okno']", page).length * $("div[data-role='okno']", page).outerWidth(true);
+	//alert($("div[data-role='okno']", page).length);
+	//alert($("div[data-role='okno']", page).outerWidth(true));
+	$("div[data-role='ekran']", page).width(szer + 'px');
+	$("div[data-role='wnetrze']", page).height(($("div[data-role='okno']", page).height() - $("div[data-role='okno'] h2", page).outerHeight(true) - 50) + 'px');
 }
 
 function plikURL() {
