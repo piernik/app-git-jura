@@ -93,9 +93,10 @@ Site.pokazAtrakcje = function() {
 	var wysTresci=$(".ui-page-active div.tresc").height();
 	var wysOkna=$(".ui-page-active div.tresc").parent().height();
 	var podstSzerOkna=$(".ui-page-active div.tresc").parent().parent().width();
+	alert(wysTresci+' '+wysOkna+' '+podstSzerOkna);
 	if (wysTresci>wysOkna) {
 		var ileRazy=Math.ceil(wysTresci/wysOkna);
-		//alert(ileRazy);
+		alert(ileRazy);
 		$(".ui-page-active div.tresc").parent().parent().width(podstSzerOkna*ileRazy+'px');
 		resize();
 		//$("div.tresc", page).css("-webkit-column-count",ileRazy);
@@ -164,6 +165,7 @@ function resize() {
 	
 	//var szer = $(".ui-page-active div[data-role='okno']").length * $(".ui-page-active div[data-role='okno']").outerWidth(true);
 	//alert($(".ui-page-active div[data-role='okno']").length+' '+$(".ui-page-active div[data-role='okno']").outerWidth(true));
+	alert(szer);
 	$(".ui-page-active div[data-role='ekran']").width(szer + 'px');
 	$(".ui-page-active div[data-role='wnetrze']").height(($(".ui-page-active div[data-role='okno']").height() - $(".ui-page-active div[data-role='okno'] h2").outerHeight(true) - 50) + 'px');
 }
