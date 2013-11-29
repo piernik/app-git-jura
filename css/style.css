@@ -57,7 +57,10 @@ div[data-role="okno"] {
 	margin-right:20px;
 }
 div[data-role="okno"]:last-child {
-margin-right:0px;
+	margin-right:0px;
+}
+div.waski[data-role="ekran"] div[data-role="okno"] {
+	width:300px;
 }
 div[data-role="okno"]>h2 {
 	margin-top:50px;
@@ -98,9 +101,6 @@ div[data-role="wnetrze"] {
 	bottom:0px;
 	left:0px;
 	background:rgba(255,255,255,0.8);
-}
-.z-header {
-	margin-top:50px;
 }
 @media all and (max-width: 480px){
 	div[data-role="okno"] {
