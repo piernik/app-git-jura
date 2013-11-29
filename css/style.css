@@ -31,12 +31,15 @@ div[data-role="ekran"] {
 div[data-role="okno"] {
 	float: left;
 	/*text-align: left;*/
-	width: 630px;
+	width: 600px;
 	height:inherit;
 	margin-right:20px;
 }
 div[data-role="okno"]:last-child {
 margin-right:0px;
+}
+div[data-role="okno"]>h2 {
+	margin-top:50px;
 }
 div[data-role="wnetrze"] {
 	overflow: hidden;
@@ -60,8 +63,10 @@ div[data-role="wnetrze"] {
 }
 .polecamy div {
 	position:relative;
-	width:300px;
-	height:200px;
+	width:48%;
+}
+.polecamy div img{
+	width:100%;
 }
 .polecamy div h2 {
 	padding:10px;
@@ -72,6 +77,11 @@ div[data-role="wnetrze"] {
 	bottom:0px;
 	left:0px;
 	background:rgba(255,255,255,0.8);
+}
+@media all and (max-width: 480px){
+	div[data-role="okno"] {
+		width: 400px;
+	}
 }
 /*
  * GRID
