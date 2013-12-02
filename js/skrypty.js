@@ -33,6 +33,8 @@ Site = {
 var mapa;
 var marker;
 localStorage.removeItem('back');
+localStorage.removeItem('rodzaj');
+localStorage.removeItem('nazwa');
 localStorage.removeItem('atrakcje');
 Site.init = function() {
 	$.support.cors = true;
@@ -72,19 +74,18 @@ Site.init = function() {
 			$("select#rodzaj").append(option);
 			for (var r in Site.rodzaje) {
 				if (Site.atrakcjeWgRodzajow[r]) {
-					var option = $("<option value='" + r + "'>" + Site.rodzaje[r] + "</option>");
+					var option = $("<option value='" + r + "'>" + Site.rodzaje[r] + " ("+Site.atrakcjeWgRodzajow[r].length+")</option>");
 					$("select#rodzaj").append(option);
 				}
 			}
 			if (localStorage.back) {
-				if (localStorage.rodzaj) {
+				if (localStorage.rodzaj)
 					$("select#rodzaj").val(localStorage.rodzaj);
-					//console.log("select: "+$("select#rodzaj").val());
-				}
+				if (localStorage.nazwa)
+					$("input#nazwa").val(localStorage.nazwa);
 			} else {
-				if (params.rodzaj) {
+				if (params.rodzaj)
 					$("select#rodzaj").val(params.rodzaj);
-				}
 			}
 			$("select#rodzaj").selectmenu('refresh');
 			$("select#rodzaj").change(function() {
@@ -224,12 +225,10 @@ Site.filtrujWyniki = function() {
 	var nazwa = $("input#nazwa").val();
 	//alert(nazwa);
 	if (nazwa) {
-		//$("h2:Contains('"+nazwa+"')").hide();
 		localStorage.nazwa = nazwa;
-		//$("#listaAtrakcji li").filter("h2:Contains('"+nazwa+"')").hide();
-		$("#listaAtrakcji li").filter(function( index ) {
-    	return $( "h2:Contains('"+nazwa+"')", this ).length === 0;
-  	}).hide();
+		$("#listaAtrakcji li").filter(function(index) {
+			return $("h2:Contains('" + nazwa + "')", this).length === 0;
+		}).hide();
 	}
 	if (rodzaj) {
 		localStorage.rodzaj = rodzaj;
@@ -268,8 +267,8 @@ Site.wczytajDane = function() {
 		$.mobile.loading("hide");
 	});
 };
-jQuery.expr[':'].Contains = function(a,i,m){
-     return (a.textContent || a.innerText || "") .toUpperCase().indexOf(m[3].toUpperCase())>=0;
+jQuery.expr[':'].Contains = function(a, i, m) {
+	return (a.textContent || a.innerText || "").toUpperCase().indexOf(m[3].toUpperCase()) >= 0;
 };
 function resize() {
 	//var page=$(".ui-page-active[data-role='page']");

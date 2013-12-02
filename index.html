@@ -5,8 +5,8 @@
 		<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
 		<title>Jura - PolskieSzlaki.pl</title>
 		<link rel="stylesheet"  href="css/themes/ps.css">
-		<link rel="stylesheet"  href="css/style.css">
 		<link rel="stylesheet" href="css/jquery.mobile.structure-1.3.2.css" />
+		<link rel="stylesheet"  href="css/style.css">
 		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
 		<script src="js/jquery.js"></script>
 		<script src="js/jquery.mobile-1.3.2.js"></script>
@@ -34,12 +34,20 @@
 						<div class="logo"><img src="img/logo.png"></div>
 						<h1>Jura - PolskieSzlaki.pl</h1>
 					</div>
-					<div data-role="okno" class="waski">
+					<div data-role="okno" style="width:311px;">
 						<h2>Atrakcje</h2>
 						<div data-role="wnetrze">
+							<a href="atrakcje.html" data-role="button"><img src="css/images/162-receipt.png"><br>Pełna lista</a>
+							<div data-role="controlgroup" data-type="horizontal">
+								<a href="atrakcje.html?rodzaj=1" data-role="button"><img src="css/images/131-tower.png"></a>
+								<a href="atrakcje.html?rodzaj=3" data-role="button"><img src="css/images/190-bank.png"></a>
+								<a href="atrakcje.html?rodzaj=13" data-role="button"><img src="css/images/60-signpost.png"></a>
+								<a href="atrakcje.html?rodzaj=12" data-role="button"><img src="css/images/52-pine-tree.png"></a>
+							</div>
+							<!--
 							<div class="ui-grid-a">
 						    <div class="ui-block-a">
-						    	<a href="atrakcje.html" data-role="button"><img src="css/images/44-shoebox.png"><br>Kategorie</a>
+						    	<a href="atrakcje.html" data-role="button"><img src="css/images/162-receipt.png"><br>Pełna lista</a>
 						    </div>
 						    <div class="ui-block-b">
 						    	<div class="ui-grid-a">
@@ -47,24 +55,20 @@
 								    	<a href="atrakcje.html?rodzaj=1" data-role="button"><img src="css/images/131-tower.png"></a>
 								    </div>
 								    <div class="ui-block-b">
-								    	<a href="#" data-role="button"><img src="css/images/190-bank.png"></a>
+								    	<a href="atrakcje.html?rodzaj=3" data-role="button"><img src="css/images/190-bank.png"></a>
 								    </div>
 								    <div class="ui-block-a">
-								    	<a href="#" data-role="button"><img src="css/images/60-signpost.png"></a>
+								    	<a href="atrakcje.html?rodzaj=13" data-role="button"><img src="css/images/60-signpost.png"></a>
 								    </div>
 								    <div class="ui-block-b">
-								    	<a href="#" data-role="button"><img src="css/images/114-balloon.png"></a>
+								    	<a href="atrakcje.html?rodzaj=12" data-role="button"><img src="css/images/52-pine-tree.png"></a>
 								    </div>
-								</div><!-- /grid-c -->
-						    </div>
-						    <div class="ui-block-a">
-						    	<a href="#" data-role="button"><img src="css/images/44-shoebox.png"><br>Kategorie</a>
-						    </div>
-						    <div class="ui-block-b">
-						    	<a href="#" data-role="button"><img src="css/images/162-receipt.png"><br>Pełna lista</a>
-						    </div>
+								</div>
+						  </div>
 						</div><!-- /grid-c -->
 						<input type="search" name="nazwa" id="search" value="" placeholder="Nazwa atrakcji...">
+						
+						
 						</div>
 					</div>
 					<div data-role="okno">

@@ -23,17 +23,6 @@ a {
 	background:rgba(255,255,255,0.8);
 	border-top-right-radius:10px;
 }
-.ui-grid-a, .ui-grid-b, .ui-grid-c, .ui-grid-d {
-	overflow: visible;
-}
-.ui-listview-filter {
-margin:0px;
-}
-.ui-listview-filter-inset {
-	background:transparent;
-	border:1px solid transparent;
-	margin:0px;
-	}
 div[data-role="header"] {
 position: fixed;
 top: 0px;
