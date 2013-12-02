@@ -3,11 +3,21 @@ a {
 	text-decoration: none;
 }
 .hero {
-	background-image: url(images/hero/ogrodzieniec.jpg);
+	/*background-image: url(images/hero/ogrodzieniec.jpg);*/
 	background-size:cover;
 	background-position-x: 50%;
 	position:relative;
 	height:100%;
+}
+.hero.default {
+background-image: url(images/hero/ogrodzieniec.jpg);
+}
+.hero.fullScreen {
+	position:absolute;
+	top:0px;
+	left:0px;
+	right:0px;
+	bottom:0px;
 }
 .hero .logo {
 	position:absolute;

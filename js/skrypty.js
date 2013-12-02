@@ -59,22 +59,24 @@ Site.init = function() {
 		//console.log("LS.href: " + localStorage.href);
 		//console.log("LS.back: " + localStorage.back);
 		//console.log("LS.rodzaj: "+localStorage.rodzaj);
-		var url = data.absUrl.split("?");
+		var url = data.absUrl.replace("#", "").split("?");
 		var params = {};
 		if (url[1]) {
 			var parameters = url[1].split("&");
 			for (var p in parameters) {
 				var s = parameters[p].split("=");
 				params[s[0]] = s[1];
+				console.log("Param " + s[0] + ": " + s[1]);
 			}
 		}
+		var plik = plikURL(data.absUrl);
 		Site.id_atrakcji = params.id;
 		if ($("select#rodzaj").length != 0 && $("select#rodzaj option").length == 0) {
 			var option = $("<option value=''>Wszystkie</option>");
 			$("select#rodzaj").append(option);
 			for (var r in Site.rodzaje) {
 				if (Site.atrakcjeWgRodzajow[r]) {
-					var option = $("<option value='" + r + "'>" + Site.rodzaje[r] + " ("+Site.atrakcjeWgRodzajow[r].length+")</option>");
+					var option = $("<option value='" + r + "'>" + Site.rodzaje[r] + " (" + Site.atrakcjeWgRodzajow[r].length + ")</option>");
 					$("select#rodzaj").append(option);
 				}
 			}
@@ -95,13 +97,21 @@ Site.init = function() {
 		$("input#nazwa").keyup(function() {
 			Site.filtrujWyniki();
 		});
+		if (params.hero) {
+			$(".ui-page-active .fullScreen").css("background-image", "url(" + Site.atrakcje[params.hero].zdjecia.hero + ")");
+		}
 		if (Site.id_atrakcji) {
-			//alert('k'+Site.id_atrakcji);
 			Site.wczytajDaneAtrakcji();
-		} else if ($("#listaAtrakcji").length > 0) {
-			//console.log("generuję listę");
-			Site.generateList();
-			Site.filtrujWyniki();
+		}
+		if (plik == 'atrakcja.html') {
+			$(".hero.klik").click(function() {
+				$.mobile.navigate("hero.html?hero=" + Site.id_atrakcji);
+			});
+		} else if (plik=="atrakcje.html") {
+			if ($("#atrakcjeListaAtrakcji").length > 0 && $("#atrakcjeListaAtrakcji li").length == 0 ) {
+				Site.generateList("atrakcjeListaAtrakcji");
+				Site.filtrujWyniki();
+			}
 		}
 		localStorage.removeItem('back');
 	});
@@ -119,6 +129,10 @@ $(window).on("navigate", function(event, data) {
 	var direction = data.state.direction;
 	if (direction == 'back') {
 		localStorage.back = 1;
+	}
+	if ($("#mainListaAtrakcji").length>0) {
+		var obj=$("#mainListaAtrakcji").parent();
+		$("form.ui-listview-filter .ui-input-clear", obj).trigger("click");
 	}
 });
 Site.wczytajDaneAtrakcji = function() {
@@ -208,32 +222,36 @@ Site.generatePolecamy = function() {
 		}
 	}
 };
-Site.generateList = function() {
+Site.generateList = function(cel) {
+	if (!cel) cel="mainListaAtrakcji";
+	console.log("Generuję listę "+cel);
+	var cl="";
+	if (cel=="mainListaAtrakcji") cl="ui-screen-hidden";
 	for (a in this.atrakcje) {
 		var inner = $('<img src="' + this.atrakcje[a].zdjecia.lista + '"> ' + '<h2>' + this.atrakcje[a].tytul + '</h2>');
 		var tag = $('<a href="atrakcja.html?id=' + a + '"></a>').append(inner);
-		var li = $("<li data-id='" + a + "' data-rodzaj='" + this.atrakcje[a].rodzaj + "'></li>").append(tag);
-		$("#listaAtrakcji").append(li);
+		var li = $("<li class='"+cl+"' data-id='" + a + "' data-rodzaj='" + this.atrakcje[a].rodzaj + "'></li>").append(tag);
+		$("#"+cel).append(li);
 	}
-	$("#listaAtrakcji").listview("refresh");
+	$("#"+cel).listview("refresh");
 	//Site.dzialanieA();
 };
 Site.filtrujWyniki = function() {
 	//alert('k');
-	$("#listaAtrakcji li:hidden").show();
+	$("#atrakcjeListaAtrakcji li:hidden").show();
 	var rodzaj = $("select#rodzaj").val();
 	var nazwa = $("input#nazwa").val();
 	//alert(nazwa);
 	if (nazwa) {
 		localStorage.nazwa = nazwa;
-		$("#listaAtrakcji li").filter(function(index) {
+		$("#atrakcjeListaAtrakcji li").filter(function(index) {
 			return $("h2:Contains('" + nazwa + "')", this).length === 0;
 		}).hide();
 	}
 	if (rodzaj) {
 		localStorage.rodzaj = rodzaj;
 		//console.log("SET LS.rodzaj: "+localStorage.rodzaj);
-		$("#listaAtrakcji li").filter(":not([data-rodzaj='" + rodzaj + "'])").hide();
+		$("#atrakcjeListaAtrakcji li").filter(":not([data-rodzaj='" + rodzaj + "'])").hide();
 	}
 };
 Site.wczytajDane = function() {
