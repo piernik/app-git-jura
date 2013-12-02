@@ -32,6 +32,7 @@ Site = {
 };
 var mapa;
 var marker;
+localStorage.removeItem('back');
 localStorage.removeItem('atrakcje');
 Site.init = function() {
 	$.support.cors = true;
@@ -51,37 +52,22 @@ Site.init = function() {
 		//console.log("pagebeforeshow");
 	});
 	$(document).on('pagechange', function(event, data) {
-		console.log("pagechange");
-		console.log("url: " + data.absUrl);
-		console.log("LS.href: " + localStorage.href);
+		//console.log("pagechange");
+		//console.log("url: " + data.absUrl);
+		//console.log("LS.href: " + localStorage.href);
+		//console.log("LS.back: " + localStorage.back);
+		//console.log("LS.rodzaj: "+localStorage.rodzaj);
 		var url = data.absUrl.split("?");
 		var params = {};
 		if (url[1]) {
-			//console.log(url);
 			var parameters = url[1].split("&");
 			for (var p in parameters) {
 				var s = parameters[p].split("=");
-				//console.log(s[0]+" = "+s[1]);
 				params[s[0]] = s[1];
-				//alert(localStorage.id);
-			}
-			//console.log(parameters);
-			for (d in params) {
-				//console.log(d+" "+params[d]);
 			}
 		}
 		Site.id_atrakcji = params.id;
-		//localStorage.id;
-		//Site.rodzaj = localStorage.rodzaj;
-		if (params.rodzaj) localStorage.rodzaj=params.rodzaj;
-		//localStorage.removeItem('id');
-		//localStorage.removeItem('rodzaj');
-		//var url=plikURL(data.absUrl);
-		//console.log("url: "+url);
-		//if (url=='atrakcje.html') {
-		console.log("LS.rodzaj: "+localStorage.rodzaj);
 		if ($("select#rodzaj").length != 0 && $("select#rodzaj option").length == 0) {
-			console.log("tworzę select");
 			var option = $("<option value=''>Wszystkie</option>");
 			$("select#rodzaj").append(option);
 			for (var r in Site.rodzaje) {
@@ -90,13 +76,15 @@ Site.init = function() {
 					$("select#rodzaj").append(option);
 				}
 			}
-			if (localStorage.rodzaj) {
-				console.log("rodzaj: "+localStorage.rodzaj);
-				//$("select#rodzaj").val(localStorage.rodzaj);
-				//console.log("select: "+$("select#rodzaj").val());
-			}
-			if (params.rodzaj) {
-				$("select#rodzaj").val(params.rodzaj);
+			if (localStorage.back) {
+				if (localStorage.rodzaj) {
+					$("select#rodzaj").val(localStorage.rodzaj);
+					//console.log("select: "+$("select#rodzaj").val());
+				}
+			} else {
+				if (params.rodzaj) {
+					$("select#rodzaj").val(params.rodzaj);
+				}
 			}
 			$("select#rodzaj").selectmenu('refresh');
 			$("select#rodzaj").change(function() {
@@ -107,10 +95,11 @@ Site.init = function() {
 			//alert('k'+Site.id_atrakcji);
 			Site.wczytajDaneAtrakcji();
 		} else if ($("#listaAtrakcji").length > 0) {
-			console.log("generuję listę");
+			//console.log("generuję listę");
 			Site.generateList();
 			Site.filtrujWyniki();
 		}
+		localStorage.removeItem('back');
 	});
 
 	$(window).resize(function() {
@@ -122,27 +111,12 @@ Site.init = function() {
 	resize();
 	//Site.dzialanieA();
 };
-/*
-Site.dzialanieA = function() {
-	return;
-	console.log("dzialanie A");
-	$("a").on("click", function(event) {
-		console.log("A klik");
-		event.preventDefault();
-		var href = $(this).attr("href");
-		console.log(href);
-
-		var url = href.split("?");
-		var parameters = url[1].split("&");
-		for (var p in parameters) {
-			var s = parameters[p].split("=");
-			localStorage[s[0]] = s[1];
-			//alert(localStorage.id);
-		}
-		$.mobile.navigate(url[0]);
-	});
-};
-*/
+$(window).on("navigate", function (event, data) {
+  var direction = data.state.direction;
+  if (direction == 'back') {
+    localStorage.back=1;
+  }
+});
 Site.wczytajDaneAtrakcji = function() {
 	//
 	if (this.atrakcje[this.id_atrakcji].pelne_dane) {
@@ -246,7 +220,7 @@ Site.filtrujWyniki = function() {
 	var rodzaj = $("select#rodzaj").val();
 	if (rodzaj) {
 		localStorage.rodzaj = rodzaj;
-		//console.log("LS.rodzaj: "+localStorage.rodzaj);
+		//console.log("SET LS.rodzaj: "+localStorage.rodzaj);
 		$("#listaAtrakcji li").filter(":not([data-rodzaj='" + rodzaj + "'])").hide();
 	}
 };
