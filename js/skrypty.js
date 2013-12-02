@@ -91,6 +91,9 @@ Site.init = function() {
 				Site.filtrujWyniki();
 			});
 		}
+		$("input#nazwa").keyup(function() {
+			Site.filtrujWyniki();
+		});
 		if (Site.id_atrakcji) {
 			//alert('k'+Site.id_atrakcji);
 			Site.wczytajDaneAtrakcji();
@@ -111,11 +114,11 @@ Site.init = function() {
 	resize();
 	//Site.dzialanieA();
 };
-$(window).on("navigate", function (event, data) {
-  var direction = data.state.direction;
-  if (direction == 'back') {
-    localStorage.back=1;
-  }
+$(window).on("navigate", function(event, data) {
+	var direction = data.state.direction;
+	if (direction == 'back') {
+		localStorage.back = 1;
+	}
 });
 Site.wczytajDaneAtrakcji = function() {
 	//
@@ -218,6 +221,16 @@ Site.filtrujWyniki = function() {
 	//alert('k');
 	$("#listaAtrakcji li:hidden").show();
 	var rodzaj = $("select#rodzaj").val();
+	var nazwa = $("input#nazwa").val();
+	//alert(nazwa);
+	if (nazwa) {
+		//$("h2:Contains('"+nazwa+"')").hide();
+		localStorage.nazwa = nazwa;
+		//$("#listaAtrakcji li").filter("h2:Contains('"+nazwa+"')").hide();
+		$("#listaAtrakcji li").filter(function( index ) {
+    	return $( "h2:Contains('"+nazwa+"')", this ).length === 0;
+  	}).hide();
+	}
 	if (rodzaj) {
 		localStorage.rodzaj = rodzaj;
 		//console.log("SET LS.rodzaj: "+localStorage.rodzaj);
@@ -254,6 +267,9 @@ Site.wczytajDane = function() {
 		//alert(this.atrakcje);
 		$.mobile.loading("hide");
 	});
+};
+jQuery.expr[':'].Contains = function(a,i,m){
+     return (a.textContent || a.innerText || "") .toUpperCase().indexOf(m[3].toUpperCase())>=0;
 };
 function resize() {
 	//var page=$(".ui-page-active[data-role='page']");
