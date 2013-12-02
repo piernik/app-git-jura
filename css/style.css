@@ -60,7 +60,7 @@ div[data-role="okno"] {
 div[data-role="okno"]:last-child {
 	margin-right:0px;
 }
-div.waski[data-role="ekran"] div[data-role="okno"] {
+div.waski[data-role="ekran"] div[data-role="okno"], div.waski[data-role="okno"]  {
 	width:300px;
 }
 div[data-role="okno"]>h2 {
@@ -114,6 +114,10 @@ div[data-role="wnetrze"] {
 	div[data-role="okno"] {
 		width: 400px;
 	}
+}
+.ui-icon-moje-kategoria {
+	background-image: url("images/44-shoebox.png");
+	background-size: 18px 18px;
 }
 /*
  * GRID
