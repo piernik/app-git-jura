@@ -120,6 +120,14 @@ iframe.film {
 #google_maps img {
 	width:100%;
 }
+div.bu-atrakcje[data-role="okno"] {
+	width:311px;
+}
+@media all and (max-width: 640px){
+	div[data-role="okno"] {
+		width: 500px;
+	}
+}
 @media all and (max-width: 480px){
 	div[data-role="okno"] {
 		width: 400px;
@@ -130,6 +138,51 @@ iframe.film {
 	}
 	.hero h1 {
 		font-size:2em;
+	}
+}
+@media all and (max-width: 360px){
+	div[data-role="okno"] {
+		width: 300px;
+	}
+	iframe.film {
+		width:280px;
+		height:157px;
+	}
+	.hero h1 {
+		font-size:1.5em;
+		padding:10px;
+		border-top-right-radius:5px;
+	}
+}
+@media all and (max-width: 320px){
+	div[data-role="okno"] {
+		width: 200px;
+	}
+	.hero h1 {
+		font-size:1em;
+		padding:10px;
+		border-top-right-radius:5px;
+	}
+	.hero .logo {
+		right:10px;
+		top:10px;
+		width:100px;
+	}
+	.hero .logo img {
+		width:inherit;
+	}
+	iframe.film {
+		width:180px;
+		height:100px;
+	}
+	div.waski[data-role="ekran"] div[data-role="okno"], div.waski[data-role="okno"]  {
+		width:200px;
+	}
+	div.bu-atrakcje[data-role="okno"]  {
+		width:200px;
+	}
+	.ui-btn-inner {
+		padding:5px;
 	}
 }
 .ui-icon-moje-kategoria {
