@@ -171,6 +171,11 @@ Site.pokazAtrakcje = function() {
 		resize();
 		$(".ui-page-active div.tresc").attr("style", "-webkit-column-count:" + ileRazy);
 	}
+	alert("tresc: "+$(".ui-page-active div.tresc").height());
+	alert("wnetrze: "+$(".ui-page-active div.tresc").parent().height());
+	alert("okno: "+$(".ui-page-active div.tresc").parent().parent().height());
+	alert("ekran: "+$(".ui-page-active div.tresc").parent().parent().parent().height());
+	$(".ui-page-active div.tresc").parent().parent().width(podstSzerOkna * ileRazy + 'px');
 	$(".ui-page-active .hero.klik").css("background-image", "url(" + this.atrakcja.zdjecia.hero + ")");
 	if (this.atrakcja.szer_geogr) {
 		this.mapaGoogle();
