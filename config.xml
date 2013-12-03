@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+    <widget xmlns = "http://www.w3.org/ns/widgets"
+        xmlns:gap = "http://phonegap.com/ns/1.0"
+        id        = "pl.polskieszlaki.jura"
+        versionCode="1" 
+        version   = "0.9.0">
+
+    <!-- versionCode is optional and Android only -->
+
+    <name>Jura Krakowsko-Częstochowska</name>
+
+    <description>
+        Atrakcje Jury Krakowsko-Częstochowskiej w jednym miejscu 
+    </description>
+
+    <author href="http://www.polskieszlaki.pl" email="biuro@polskieszlaki.pl">
+        Łukasz Piernikarczyk
+    </author>
+    
+    <gap:splash src="splash.png" />
+    <icon src="hdpi.png" />
+    <icon src="ldpi.png" gap:platform="android" gap:density="ldpi" />
+		<icon src="mdpi.png" gap:platform="android" gap:density="mdpi" />
+		<icon src="hdpi.png" gap:platform="android" gap:density="hdpi" />
+		<icon src="xhdpi.png" gap:platform="android" gap:density="xhdpi" />
+    <gap:platform name="android" />
+    <preference name="phonegap-version" value="2.9.0" />
+    <preference name="fullscreen" value="true" />
+
+</widget>

@@ -107,6 +107,7 @@ Site.init = function() {
 			}
 		}
 		localStorage.removeItem('back');
+		resize();
 	});
 
 	$(window).resize(function() {
