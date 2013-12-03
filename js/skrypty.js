@@ -161,7 +161,7 @@ Site.pokazAtrakcje = function() {
 	$('a', $(".ui-page-active div.tresc .txt")).contents().unwrap();
 	resize();
 	var wysTresci = $(".ui-page-active div.tresc").height();
-	var wysOkna = $(".ui-page-active div.tresc").parent().height();
+	var wysOkna = $(".ui-page-active div.tresc").parent().height()-10;
 	var podstSzerOkna = $(".ui-page-active div.tresc").parent().parent().width();
 	//alert(wysTresci+' '+wysOkna+' '+podstSzerOkna);
 	if (wysTresci > wysOkna) {
