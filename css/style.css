@@ -70,6 +70,10 @@ div[data-role="wnetrze"] {
 	overflow-y: auto;
 	padding:1px;
 }
+iframe.film {
+	width:560px;
+	height:315px;
+}
 .grid {
   
 }
@@ -112,6 +116,13 @@ div[data-role="wnetrze"] {
 @media all and (max-width: 480px){
 	div[data-role="okno"] {
 		width: 400px;
+	}
+	iframe.film {
+		width:380px;
+		height:215px;
+	}
+	.hero h1 {
+		font-size:2em;
 	}
 }
 .ui-icon-moje-kategoria {

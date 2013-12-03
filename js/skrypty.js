@@ -54,8 +54,8 @@ Site.init = function() {
 		//console.log("pagebeforeshow");
 	});
 	$(document).on('pagechange', function(event, data) {
-		//console.log("pagechange");
-		//console.log("url: " + data.absUrl);
+		console.log("pagechange");
+		console.log("url: " + data.absUrl);
 		//console.log("LS.href: " + localStorage.href);
 		//console.log("LS.back: " + localStorage.back);
 		//console.log("LS.rodzaj: "+localStorage.rodzaj);
