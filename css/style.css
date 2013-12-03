@@ -1,3 +1,6 @@
+body {
+height:100%;
+}
 a {
 	color:#333;
 	text-decoration: none;
@@ -33,6 +36,9 @@ background-image: url(images/hero/ogrodzieniec.jpg);
 	background:rgba(255,255,255,0.8);
 	border-top-right-radius:10px;
 }
+div[data-role="page"] {
+	height:100%;
+}
 div[data-role="header"] {
 position: fixed;
 top: 0px;
@@ -41,6 +47,7 @@ width: 100%;
 }
 div[data-role="content"] {
 	width: 100%;
+	height:inherit;
 	padding:0px;
 	overflow: hidden;
 	overflow-x: scroll;
