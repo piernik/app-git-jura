@@ -171,10 +171,10 @@ Site.pokazAtrakcje = function() {
 		resize();
 		$(".ui-page-active div.tresc").attr("style", "-webkit-column-count:" + ileRazy);
 	}
-	alert("tresc: "+$(".ui-page-active div.tresc").height());
-	alert("wnetrze: "+$(".ui-page-active div.tresc").parent().height());
-	alert("okno: "+$(".ui-page-active div.tresc").parent().parent().height());
-	alert("ekran: "+$(".ui-page-active div.tresc").parent().parent().parent().height());
+	//alert("tresc: "+$(".ui-page-active div.tresc").height());
+	//alert("wnetrze: "+$(".ui-page-active div.tresc").parent().height());
+	//alert("okno: "+$(".ui-page-active div.tresc").parent().parent().height());
+	//alert("ekran: "+$(".ui-page-active div.tresc").parent().parent().parent().height());
 	$(".ui-page-active div.tresc").parent().parent().width(podstSzerOkna * ileRazy + 'px');
 	$(".ui-page-active .hero.klik").css("background-image", "url(" + this.atrakcja.zdjecia.hero + ")");
 	if (this.atrakcja.szer_geogr) {
@@ -269,7 +269,7 @@ function resize() {
 		szer += $(this).outerWidth(true);
 	});
 	$("div[data-role='ekran']").width(szer + 'px');
-	$("div[data-role='wnetrze']").height((wysOkna - $("div[data-role='okno'] h2").outerHeight(true) -50) + 'px');
+	$("div[data-role='wnetrze']").height((wysOkna - $("div[data-role='okno'] h2").outerHeight(true) -20) + 'px');
 }
 function plikURL() {
 	var loc = window.location;
