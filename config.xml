@@ -19,6 +19,7 @@
     
     <preference name="permissions" value="none"/>
 		
+    <icon src="img/icons/android/xhdpi.png" />
     <icon src="img/icons/android/ldpi.png" gap:platform="android" gap:density="ldpi" />
 		<icon src="img/icons/android/mdpi.png" gap:platform="android" gap:density="mdpi" />
 		<icon src="img/icons/android/hdpi.png" gap:platform="android" gap:density="hdpi" />
