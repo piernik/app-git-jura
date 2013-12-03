@@ -122,11 +122,11 @@ Site.init = function() {
 		resize();
 		alert('zmiana: '+$(window).height());
 	});
-	$(window).on("orientationchange", function(event) {
-		alert('zmiana: '+$(window).height());
-		resize();
-		alert('zmiana: '+$(window).height());
-	});
+	//$(window).on("orientationchange", function(event) {
+		//alert('zmiana: '+$(window).height());
+		//resize();
+		//alert('zmiana: '+$(window).height());
+	//});
 	resize();
 	//Site.dzialanieA();
 };
