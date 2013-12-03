@@ -163,10 +163,10 @@ Site.pokazAtrakcje = function() {
 	var wysTresci = $(".ui-page-active div.tresc").height();
 	var wysOkna = $(".ui-page-active div.tresc").parent().height();
 	var podstSzerOkna = $(".ui-page-active div.tresc").parent().parent().width();
-	alert(wysTresci+' '+wysOkna+' '+podstSzerOkna);
+	//alert(wysTresci+' '+wysOkna+' '+podstSzerOkna);
 	if (wysTresci > wysOkna) {
 		var ileRazy = Math.ceil(wysTresci / wysOkna);
-		alert(ileRazy);
+		//alert(ileRazy);
 		$(".ui-page-active div.tresc").parent().parent().width(podstSzerOkna * ileRazy + 'px');
 		resize();
 		$(".ui-page-active div.tresc").attr("style", "-webkit-column-count:" + ileRazy);
