@@ -118,9 +118,14 @@ Site.init = function() {
 	});
 
 	$(window).resize(function() {
-		alert('zmiana przed: '+$(window).height());
-		resize();
-		alert('zmiana po: '+$(window).height());
+		//alert('zmiana przed: '+$(window).height());
+		if ($(".ui-page-active div.tresc .txt").length>0) {
+			//alert('przeladowanie');
+			Site.przeladujAtrakcje();
+		} else {
+			resize();
+		}
+		//alert('zmiana po: '+$(window).height());
 	});
 	//$(window).on("orientationchange", function(event) {
 		//alert('zmiana: '+$(window).height());
@@ -180,6 +185,7 @@ Site.pokazAtrakcje = function() {
 	//alert(wysTresci+' '+wysOkna+' '+podstSzerOkna);
 	if (wysTresci > wysOkna) {
 		var ileRazy = Math.ceil(wysTresci / wysOkna);
+		//alert(ileRazy);
 		$(".ui-page-active div.tresc").parent().parent().width(podstSzerOkna * ileRazy + 'px');
 		resize();
 		$(".ui-page-active div.tresc").attr("style", "-webkit-column-count:" + ileRazy);
@@ -189,25 +195,20 @@ Site.pokazAtrakcje = function() {
 		this.mapaGoogle();
 	}
 };
+Site.przeladujAtrakcje=function() {
+	$(".ui-page-active div.tresc .txt").html("");
+	$(".ui-page-active div.tresc").parent().parent().width('300px');
+	$(".ui-page-active div.tresc").attr("style", "-webkit-column-count:" + 1);
+	$("#google_maps").html("");
+	this.pokazAtrakcje();
+};
 Site.mapaGoogle = function() {
-	$("#google_maps a").attr("href", "geo:" + this.atrakcja.szer_geogr + "," + this.atrakcja.dl_geogr + "?z=15&q=" + this.atrakcja.szer_geogr + "," + this.atrakcja.dl_geogr + "(" + this.atrakcja.tytul + ")");
+	var a = $("<a></a>");
+	$(a).attr("href", "geo:" + this.atrakcja.szer_geogr + "," + this.atrakcja.dl_geogr + "?z=15&q=" + this.atrakcja.szer_geogr + "," + this.atrakcja.dl_geogr + "(" + this.atrakcja.tytul + ")");
 	var imgSrc = "http://maps.googleapis.com/maps/api/staticmap?center=" + this.atrakcja.szer_geogr + "," + this.atrakcja.dl_geogr + "&zoom=15&size=300x200&maptype=roadmap&markers=color:blue%7C" + this.atrakcja.szer_geogr + "," + this.atrakcja.dl_geogr + "&sensor=false";
 	var img = $("<img src='" + imgSrc + "'/>");
-	$("#google_maps a").append(img);
-	/*
-	 var myLatLng = new google.maps.LatLng(this.atrakcja.szer_geogr, this.atrakcja.dl_geogr);
-	 var myOptions = {
-	 zoom : 15,
-	 center : myLatLng,
-	 mapTypeId : google.maps.MapTypeId.ROADMAP,
-	 };
-	 map = new google.maps.Map(document.getElementById("google_maps"), myOptions);
-	 var point = myLatLng;
-	 marker = new google.maps.Marker({
-	 position : point,
-	 map : map,
-	 });
-	 */
+	$(a).append(img);
+	$("#google_maps").append(a);
 };
 Site.generatePolecamy = function() {
 	var i = 0;
@@ -216,13 +217,6 @@ Site.generatePolecamy = function() {
 			i++;
 			var inner = $('<a href="atrakcja.html?id=' + a + '"><img src="' + this.atrakcje[a].zdjecia.lista_glowna + '"> ' + '<h2>' + this.atrakcje[a].tytul + '</h2></a>');
 			var div = $("<div></div>").append(inner);
-			/*
-			 if (i % 2 == 0)
-			 var cl = "grid-1";
-			 else
-			 var cl = "grid-2";
-			 $(div).addClass(cl);
-			 */
 			$(".polecamy").append(div);
 		}
 	}
@@ -300,7 +294,7 @@ function resize() {
 	var szer = 0;
 	//var wysOkna=0;
 	var wysOkna = $(window).height();
-	$("div[data-role='okno']").each(function(index) {
+	$(".ui-page-active div[data-role='okno']").each(function(index) {
 		szer += $(this).outerWidth(true);
 		//if ($(this).height()>wysOkna) wysOkna=$(this).height();
 	});
