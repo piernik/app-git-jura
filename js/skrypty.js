@@ -158,13 +158,15 @@ Site.pokazAtrakcje = function() {
 	this.atrakcja = this.atrakcje[this.id_atrakcji];
 	$(".ui-page-active div[data-role='header'] h1").html(this.atrakcja.tytul);
 	$(".ui-page-active div.tresc .txt").html(this.atrakcja.tresc);
+	$('a', $(".ui-page-active div.tresc .txt")).contents().unwrap();
 	resize();
 	var wysTresci = $(".ui-page-active div.tresc").height();
 	var wysOkna = $(".ui-page-active div.tresc").parent().height();
 	var podstSzerOkna = $(".ui-page-active div.tresc").parent().parent().width();
-	//alert(wysTresci+' '+wysOkna+' '+podstSzerOkna);
+	alert(wysTresci+' '+wysOkna+' '+podstSzerOkna);
 	if (wysTresci > wysOkna) {
 		var ileRazy = Math.ceil(wysTresci / wysOkna);
+		alert(ileRazy);
 		$(".ui-page-active div.tresc").parent().parent().width(podstSzerOkna * ileRazy + 'px');
 		resize();
 		$(".ui-page-active div.tresc").attr("style", "-webkit-column-count:" + ileRazy);
