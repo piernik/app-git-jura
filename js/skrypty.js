@@ -40,6 +40,7 @@ Site.init = function() {
 	$.support.cors = true;
 	$.mobile.allowCrossDomainPages = true;
 	$.mobile.defaultPageTransition = 'slide';
+	$.mobile.orientationChangeEnabled = false;
 	if (!localStorage.atrakcje) {
 		//alert('Wgrywam dane z serwera');
 		Site.wczytajDane();
@@ -117,7 +118,9 @@ Site.init = function() {
 	});
 
 	$(window).resize(function() {
+		alert('zmiana: '+$(window).height());
 		resize();
+		alert('zmiana: '+$(window).height());
 	});
 	$(window).on("orientationchange", function(event) {
 		alert('zmiana: '+$(window).height());
