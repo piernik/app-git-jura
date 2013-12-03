@@ -264,7 +264,7 @@ function resize() {
 		szer += $(this).outerWidth(true);
 	});
 	$("div[data-role='ekran']").width(szer + 'px');
-	$("div[data-role='wnetrze']").height((wysOkna - $("div[data-role='okno'] h2").outerHeight(true) -10) + 'px');
+	$("div[data-role='wnetrze']").height((wysOkna - $("div[data-role='okno'] h2").outerHeight(true) -50) + 'px');
 }
 function plikURL() {
 	var loc = window.location;
