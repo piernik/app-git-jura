@@ -30,8 +30,6 @@ Site = {
 	},
 	atrakcjeWgRodzajow : {},
 };
-var mapa;
-var marker;
 localStorage.removeItem('back');
 localStorage.removeItem('rodzaj');
 localStorage.removeItem('nazwa');
@@ -42,21 +40,15 @@ Site.init = function() {
 	$.mobile.defaultPageTransition = 'slide';
 	$.mobile.orientationChangeEnabled = false;
 	if (!localStorage.atrakcje) {
-		//alert('Wgrywam dane z serwera');
 		Site.wczytajDane();
 	} else {
-		//alert('Mam dane lokalnie');
 		this.atrakcje = JSON.parse(localStorage.atrakcje);
 		this.generatePolecamy();
 		this.generateList();
-		//}
 	}
-	$(document).on('pagebeforeshow', function(event, data) {
-		//console.log("pagebeforeshow");
-	});
 	$(document).on('pagechange', function(event, data) {
-		console.log("pagechange");
-		console.log("url: " + data.absUrl);
+		//console.log("pagechange");
+		//console.log("url: " + data.absUrl);
 		//console.log("LS.href: " + localStorage.href);
 		//console.log("LS.back: " + localStorage.back);
 		//console.log("LS.rodzaj: "+localStorage.rodzaj);
@@ -108,8 +100,8 @@ Site.init = function() {
 			$(".hero.klik").click(function() {
 				$.mobile.navigate("hero.html?hero=" + Site.id_atrakcji);
 			});
-		} else if (plik=="atrakcje.html") {
-			if ($("#atrakcjeListaAtrakcji").length > 0 && $("#atrakcjeListaAtrakcji li").length == 0 ) {
+		} else if (plik == "atrakcje.html") {
+			if ($("#atrakcjeListaAtrakcji").length > 0 && $("#atrakcjeListaAtrakcji li").length == 0) {
 				Site.generateList("atrakcjeListaAtrakcji");
 				Site.filtrujWyniki();
 			}
@@ -118,35 +110,25 @@ Site.init = function() {
 	});
 
 	$(window).resize(function() {
-		//alert('zmiana przed: '+$(window).height());
-		if ($(".ui-page-active div.tresc .txt").length>0) {
-			//alert('przeladowanie');
+		if ($(".ui-page-active div.tresc .txt").length > 0) {
 			Site.przeladujAtrakcje();
 		} else {
 			resize();
 		}
-		//alert('zmiana po: '+$(window).height());
 	});
-	//$(window).on("orientationchange", function(event) {
-		//alert('zmiana: '+$(window).height());
-		//resize();
-		//alert('zmiana: '+$(window).height());
-	//});
 	resize();
-	//Site.dzialanieA();
 };
 $(window).on("navigate", function(event, data) {
 	var direction = data.state.direction;
 	if (direction == 'back') {
 		localStorage.back = 1;
 	}
-	if ($("#mainListaAtrakcji").length>0) {
-		var obj=$("#mainListaAtrakcji").parent();
+	if ($("#mainListaAtrakcji").length > 0) {
+		var obj = $("#mainListaAtrakcji").parent();
 		$("form.ui-listview-filter .ui-input-clear", obj).trigger("click");
 	}
 });
 Site.wczytajDaneAtrakcji = function() {
-	//
 	if (this.atrakcje[this.id_atrakcji].pelne_dane) {
 		//alert('Mam dane atrakcji');
 		Site.pokazAtrakcje();
@@ -162,7 +144,6 @@ Site.wczytajDaneAtrakcji = function() {
 			url : "http://www.polskieszlaki.pl/_a_dane.php?id_atrakcji=" + this.atrakcje[this.id_atrakcji].id,
 			dataType : "json",
 		}).done(function(dane) {
-			//alert(dane);
 			Site.atrakcje[Site.id_atrakcji].pelne_dane = true;
 			Site.atrakcje[Site.id_atrakcji].tresc = dane.tresc;
 			Site.atrakcje[Site.id_atrakcji].szer_geogr = dane.szer_geogr;
@@ -173,8 +154,6 @@ Site.wczytajDaneAtrakcji = function() {
 	}
 };
 Site.pokazAtrakcje = function() {
-	//alert('Pokazuję atrakcję: '+this.id_atrakcji);
-	//var page=$(".ui-page-active[data-role='page']");
 	this.atrakcja = this.atrakcje[this.id_atrakcji];
 	$(".ui-page-active div[data-role='header'] h1").html(this.atrakcja.tytul);
 	$(".ui-page-active div.tresc .txt").html(this.atrakcja.tresc);
@@ -185,17 +164,16 @@ Site.pokazAtrakcje = function() {
 	//alert(wysTresci+' '+wysOkna+' '+podstSzerOkna);
 	if (wysTresci > wysOkna) {
 		var ileRazy = Math.ceil(wysTresci / wysOkna);
-		//alert(ileRazy);
 		$(".ui-page-active div.tresc").parent().parent().width(podstSzerOkna * ileRazy + 'px');
 		resize();
 		$(".ui-page-active div.tresc").attr("style", "-webkit-column-count:" + ileRazy);
 	}
-	$(".ui-page-active .hero").css("background-image", "url(" + this.atrakcja.zdjecia.hero + ")");
+	$(".ui-page-active .hero.klik").css("background-image", "url(" + this.atrakcja.zdjecia.hero + ")");
 	if (this.atrakcja.szer_geogr) {
 		this.mapaGoogle();
 	}
 };
-Site.przeladujAtrakcje=function() {
+Site.przeladujAtrakcje = function() {
 	$(".ui-page-active div.tresc .txt").html("");
 	$(".ui-page-active div.tresc").parent().parent().width('300px');
 	$(".ui-page-active div.tresc").attr("style", "-webkit-column-count:" + 1);
@@ -222,25 +200,24 @@ Site.generatePolecamy = function() {
 	}
 };
 Site.generateList = function(cel) {
-	if (!cel) cel="mainListaAtrakcji";
-	console.log("Generuję listę "+cel);
-	var cl="";
-	if (cel=="mainListaAtrakcji") cl="ui-screen-hidden";
+	if (!cel)
+		cel = "mainListaAtrakcji";
+	//console.log("Generuję listę "+cel);
+	var cl = "";
+	if (cel == "mainListaAtrakcji")
+		cl = "ui-screen-hidden";
 	for (a in this.atrakcje) {
 		var inner = $('<img src="' + this.atrakcje[a].zdjecia.lista + '"> ' + '<h2>' + this.atrakcje[a].tytul + '</h2>');
 		var tag = $('<a href="atrakcja.html?id=' + a + '"></a>').append(inner);
-		var li = $("<li class='"+cl+"' data-id='" + a + "' data-rodzaj='" + this.atrakcje[a].rodzaj + "'></li>").append(tag);
-		$("#"+cel).append(li);
+		var li = $("<li class='" + cl + "' data-id='" + a + "' data-rodzaj='" + this.atrakcje[a].rodzaj + "'></li>").append(tag);
+		$("#" + cel).append(li);
 	}
-	$("#"+cel).listview("refresh");
-	//Site.dzialanieA();
+	$("#" + cel).listview("refresh");
 };
 Site.filtrujWyniki = function() {
-	//alert('k');
 	$("#atrakcjeListaAtrakcji li:hidden").show();
 	var rodzaj = $("select#rodzaj").val();
 	var nazwa = $("input#nazwa").val();
-	//alert(nazwa);
 	if (nazwa) {
 		localStorage.nazwa = nazwa;
 		$("#atrakcjeListaAtrakcji li").filter(function(index) {
@@ -249,7 +226,6 @@ Site.filtrujWyniki = function() {
 	}
 	if (rodzaj) {
 		localStorage.rodzaj = rodzaj;
-		//console.log("SET LS.rodzaj: "+localStorage.rodzaj);
 		$("#atrakcjeListaAtrakcji li").filter(":not([data-rodzaj='" + rodzaj + "'])").hide();
 	}
 };
@@ -264,11 +240,6 @@ Site.wczytajDane = function() {
 		url : "http://www.polskieszlaki.pl/_a_dane.php",
 		dataType : "json",
 	}).done(function(dane) {
-		//alert(dane);
-		//alert('mam');
-
-		//$(".strona").show();
-		//$(".wgrywam").hide('fast');
 		localStorage.atrakcje = JSON.stringify(dane);
 		Site.atrakcje = dane;
 		for (var d in dane) {
@@ -277,42 +248,26 @@ Site.wczytajDane = function() {
 				Site.atrakcjeWgRodzajow[atr.rodzaj] = [];
 			Site.atrakcjeWgRodzajow[atr.rodzaj].push(d);
 		}
-		//alert(Site.atrakcjeWgRodzajow[1]);
 		Site.generatePolecamy();
 		Site.generateList();
-		//alert(this.atrakcje);
 		$.mobile.loading("hide");
 	});
 };
-jQuery.expr[':'].Contains = function(a, i, m) {
-	return (a.textContent || a.innerText || "").toUpperCase().indexOf(m[3].toUpperCase()) >= 0;
-};
+
 function resize() {
-	//var page=$(".ui-page-active[data-role='page']");
-	//.ui-page-active 
-	//$("div[data-role='content']").height(($(window).height()) + 'px');
 	var szer = 0;
-	//var wysOkna=0;
 	var wysOkna = $(window).height();
 	$(".ui-page-active div[data-role='okno']").each(function(index) {
 		szer += $(this).outerWidth(true);
-		//if ($(this).height()>wysOkna) wysOkna=$(this).height();
 	});
-
-	//var szer = $(".ui-page-active div[data-role='okno']").length * $(".ui-page-active div[data-role='okno']").outerWidth(true);
-	//alert($(".ui-page-active div[data-role='okno']").length+' '+$(".ui-page-active div[data-role='okno']").outerWidth(true));
-	//alert(szer);
 	$("div[data-role='ekran']").width(szer + 'px');
-	//wysOkna=$(".ui-page-active div[data-role='okno']").height();
-	//alert(wysOkna);
-	//alert($(".ui-page-active div[data-role='okno'] h2").outerHeight(true));
 	$("div[data-role='wnetrze']").height((wysOkna - $("div[data-role='okno'] h2").outerHeight(true) + 5) + 'px');
-	//alert($(".ui-page-active div[data-role='wnetrze']").height());
 }
-
 function plikURL() {
 	var loc = window.location;
 	var pathName = loc.pathname.substring(loc.pathname.lastIndexOf('/') + 1);
 	return pathName;
-	//loc.href.substring(0, loc.href.length - ((loc.pathname + loc.search + loc.hash).length - pathName.length));
 }
+jQuery.expr[':'].Contains = function(a, i, m) {
+	return (a.textContent || a.innerText || "").toUpperCase().indexOf(m[3].toUpperCase()) >= 0;
+};

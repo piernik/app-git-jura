@@ -12,8 +12,6 @@
 		<script src="js/jquery-ui-1.10.3.custom.js"></script>
 		<script src="js/jquery.mobile-1.3.2.js"></script>
 		<script src="js/skrypty.js"></script>
-		<script type="text/javascript" src="http://maps.google.com/maps/api/js?v=3.9&sensor=true&region=PL&language=pl"></script>
-		<!--<script src="cordova-2.0.0.js"></script>-->
 		<script>
 			$(document).ready(function() {
 				Site.init();
@@ -22,13 +20,6 @@
 	</head>
 	<body>
 		<div data-role="page" data-theme="a">
-		<!--
-			<div data-role="header" data-theme="b">
-				<h1>News</h1>
-				<a href="index.html" data-shadow="false" data-iconshadow="false" data-icon="arrow-l" data-iconpos="notext" data-rel="back" data-ajax="false">Back</a>
-				<a href="grid-listview-demo.html">next</a>
-			</div><!-- /header -->
-
 			<div data-role="content">
 				<div data-role="ekran">
 					<div data-role="okno" class="hero default">
@@ -45,35 +36,12 @@
 								<a href="atrakcje.html?rodzaj=13" data-role="button"><img src="css/images/60-signpost.png"></a>
 								<a href="atrakcje.html?rodzaj=12" data-role="button"><img src="css/images/52-pine-tree.png"></a>
 							</div>
-							<!--
-							<div class="ui-grid-a">
-						    <div class="ui-block-a">
-						    	<a href="atrakcje.html" data-role="button"><img src="css/images/162-receipt.png"><br>Pełna lista</a>
-						    </div>
-						    <div class="ui-block-b">
-						    	<div class="ui-grid-a">
-								    <div class="ui-block-a">
-								    	<a href="atrakcje.html?rodzaj=1" data-role="button"><img src="css/images/131-tower.png"></a>
-								    </div>
-								    <div class="ui-block-b">
-								    	<a href="atrakcje.html?rodzaj=3" data-role="button"><img src="css/images/190-bank.png"></a>
-								    </div>
-								    <div class="ui-block-a">
-								    	<a href="atrakcje.html?rodzaj=13" data-role="button"><img src="css/images/60-signpost.png"></a>
-								    </div>
-								    <div class="ui-block-b">
-								    	<a href="atrakcje.html?rodzaj=12" data-role="button"><img src="css/images/52-pine-tree.png"></a>
-								    </div>
-								</div>
-						  </div>
-						</div><!-- /grid-c -->
-						<!--<input type="search" name="nazwa" id="search" value="" placeholder="Nazwa atrakcji...">-->
 						<div style="overflow:hidden; overflow-y: auto; max-height:180px; padding-top:20px;">
 							<ul id="mainListaAtrakcji" data-role="listview" data-filter="true" data-filter-reveal="true" data-filter-placeholder="Nazwa..." data-inset="true"></ul>
 						</div>
 						</div>
 					</div>
-					<div data-role="okno">
+					<div data-role="okno" class="waski">
 						<h2>Polecamy</h2>
 						<div data-role="wnetrze">
 						<div class="polecamy grid"></div>
@@ -88,20 +56,8 @@
 						<iframe class="film" src="http://www.youtube.com/embed/UZ8Ws2leU2Y" frameborder="0" allowfullscreen></iframe>
 						</div>
 					</div>
-					<!--
-					<div data-role="okno">
-						<h2>Lista atrakcji</h2>
-						<div data-role="wnetrze">
-						<ul id="listaAtrakcji" data-role="listview" data-filter="true" data-filter-placeholder="Szukaj..." data-inset="true" ></ul>
-						</div>
-					</div>
-					-->
 				</div>
 			</div>
-			<!--
-			<div data-role="footer" data-theme="none">
-				<h3>Responsive Grid Listview</h3>
-			</div><!-- /footer -->
 		</div>
 	</body>
 </html>
