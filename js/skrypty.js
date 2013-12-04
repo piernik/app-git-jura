@@ -174,7 +174,9 @@ Site.pokazAtrakcje = function() {
 	$(".ui-page-active div[data-role='header'] h1").html(this.atrakcja.tytul);
 	$(".ui-page-active div#tresc").html(this.atrakcja.tresc);
 	$('a', $(".ui-page-active div#tresc")).contents().unwrap();
-	$(".ui-page-active div#zdjecie").css("background-image", "url(" + this.atrakcja.zdjecia.hero + ")");
+	//$(".ui-page-active div#zdjecie").css("background-image", "url(" + this.atrakcja.zdjecia.glowne + ")");
+	var img = $("<img src='" + this.atrakcja.zdjecia.glowne + "'/>");
+	$(".ui-page-active div#zdjecie").append(img);
 	if (this.atrakcja.szer_geogr) {
 		this.mapaGoogle();
 	}
@@ -189,7 +191,7 @@ Site.przeladujAtrakcje = function() {
 Site.mapaGoogle = function() {
 	var a = $("<a></a>");
 	$(a).attr("href", "geo:" + this.atrakcja.szer_geogr + "," + this.atrakcja.dl_geogr + "?z=15&q=" + this.atrakcja.szer_geogr + "," + this.atrakcja.dl_geogr + "(" + this.atrakcja.tytul + ")");
-	var imgSrc = "http://maps.googleapis.com/maps/api/staticmap?center=" + this.atrakcja.szer_geogr + "," + this.atrakcja.dl_geogr + "&zoom=15&size=300x200&maptype=roadmap&markers=color:blue%7C" + this.atrakcja.szer_geogr + "," + this.atrakcja.dl_geogr + "&sensor=false";
+	var imgSrc = "http://maps.googleapis.com/maps/api/staticmap?center=" + this.atrakcja.szer_geogr + "," + this.atrakcja.dl_geogr + "&zoom=15&size=400x300&maptype=roadmap&markers=color:blue%7C" + this.atrakcja.szer_geogr + "," + this.atrakcja.dl_geogr + "&sensor=false";
 	var img = $("<img src='" + imgSrc + "'/>");
 	$(a).append(img);
 	$("#google_maps").append(a);
