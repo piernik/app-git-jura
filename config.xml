@@ -17,6 +17,8 @@
         Łukasz Piernikarczyk
     </author>
     
+    <uses-sdk android:minSdkVersion="7" android:targetSdkVersion="15"/>
+    
     <preference name="permissions" value="none"/>
     <preference name="load-url-timeout" value="60000" />
 		
