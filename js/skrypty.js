@@ -46,6 +46,14 @@ Site.init = function() {
 		this.generatePolecamy();
 		this.generateList();
 	}
+	$("body").on("swipeleft", function(event) {
+		console.log("swipe left");
+		$("div[data-role='content']").animate({scrollLeft: pos - 200} );
+	});
+	$("body").on("swiperight", function(event) {
+		console.log("swipe right");
+		$("div[data-role='content']").animate({scrollLeft: pos + 200} );
+	});
 	$(document).on('pagechange', function(event, data) {
 		//console.log("pagechange");
 		//console.log("url: " + data.absUrl);
@@ -161,7 +169,7 @@ Site.pokazAtrakcje = function() {
 	$('a', $(".ui-page-active div.tresc .txt")).contents().unwrap();
 	resize();
 	var wysTresci = $(".ui-page-active div.tresc").height();
-	var wysOkna = $(".ui-page-active div.tresc").parent().height()-10;
+	var wysOkna = $(".ui-page-active div.tresc").parent().height() - 10;
 	var podstSzerOkna = $(".ui-page-active div.tresc").parent().parent().width();
 	//alert(wysTresci+' '+wysOkna+' '+podstSzerOkna);
 	if (wysTresci > wysOkna) {
@@ -269,13 +277,43 @@ function resize() {
 		szer += $(this).outerWidth(true);
 	});
 	$("div[data-role='ekran']").width(szer + 'px');
-	$("div[data-role='wnetrze']").height((wysOkna - $("div[data-role='okno'] h2").outerHeight(true) -10) + 'px');
+	$("div[data-role='wnetrze']").height((wysOkna - $("div[data-role='okno'] h2").outerHeight(true) - 10) + 'px');
 }
+
 function plikURL() {
 	var loc = window.location;
 	var pathName = loc.pathname.substring(loc.pathname.lastIndexOf('/') + 1);
 	return pathName;
 }
+
 jQuery.expr[':'].Contains = function(a, i, m) {
 	return (a.textContent || a.innerText || "").toUpperCase().indexOf(m[3].toUpperCase()) >= 0;
 };
+$.event.special.swipe = $.extend($.event.special.swipe, {
+	start : function(event) {
+		var data = event.originalEvent.touches ? event.originalEvent.touches[0] : event;
+		return {
+			time : (new Date() ).getTime(),
+			coords : [data.pageX, data.pageY],
+			origin : $(event.target),
+			offset : $('body').scrollTop()
+		};
+	},
+
+	stop : function(event) {
+		var data = event.originalEvent.touches ? event.originalEvent.touches[0] : event;
+		return {
+			time : (new Date() ).getTime(),
+			coords : [data.pageX, data.pageY],
+			offset : $('body').scrollTop()
+		};
+	},
+
+	handleSwipe : function(start, stop) {
+		var swipe = $.event.special.swipe, x = Math.abs(start.coords[0] - stop.coords[0]), y = Math.abs(start.coords[1] - stop.coords[1]), offset = Math.abs(start.offset - stop.offset), time = stop.time - start.time;
+		if (time < swipe.durationThreshold && x > swipe.horizontalDistanceThreshold && (y + offset ) < swipe.verticalDistanceThreshold) {
+
+			start.origin.trigger("swipe").trigger((start.coords[0] - stop.coords[0] ) > 0 ? "swipeleft" : "swiperight");
+		}
+	}
+}); 
