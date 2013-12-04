@@ -46,6 +46,7 @@ Site.init = function() {
 		this.generatePolecamy();
 		this.generateList();
 	}
+	/*
 	$("body").on("swipeleft", function(event) {
 		console.log("swipe left");
 		$("div[data-role='content']").animate({scrollLeft: pos - 200} );
@@ -54,6 +55,7 @@ Site.init = function() {
 		console.log("swipe right");
 		$("div[data-role='content']").animate({scrollLeft: pos + 200} );
 	});
+	*/
 	$(document).on('pagechange', function(event, data) {
 		//console.log("pagechange");
 		//console.log("url: " + data.absUrl);
