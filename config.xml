@@ -18,6 +18,7 @@
     </author>
     
     <preference name="permissions" value="none"/>
+    <preference name="load-url-timeout" value="60000" />
 		
     <icon src="img/icons/android/xhdpi.png" />
     <icon src="img/icons/android/ldpi.png" gap:platform="android" gap:density="ldpi" />
