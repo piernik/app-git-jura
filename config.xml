@@ -17,10 +17,13 @@
         Łukasz Piernikarczyk
     </author>
     
-    <uses-sdk android:minSdkVersion="7" android:targetSdkVersion="15"/>
-    
+    <preference name="android-minSdkVersion" value="7" /> 
+		<preference name="android-maxSdkVersion" value="15" /> 
     <preference name="permissions" value="none"/>
     <preference name="load-url-timeout" value="60000" />
+    
+    <preference name="phonegap-version" value="2.9.0" />
+    <preference name="fullscreen" value="true" />
 		
     <icon src="img/icons/android/xhdpi.png" />
     <icon src="img/icons/android/ldpi.png" gap:platform="android" gap:density="ldpi" />
@@ -28,7 +31,4 @@
 		<icon src="img/icons/android/hdpi.png" gap:platform="android" gap:density="hdpi" />
 		<icon src="img/icons/android/xhdpi.png" gap:platform="android" gap:density="xhdpi" />
     <gap:platform name="android" />
-    <preference name="phonegap-version" value="2.9.0" />
-    <preference name="fullscreen" value="true" />
-
 </widget>
