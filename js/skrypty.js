@@ -34,11 +34,8 @@ localStorage.removeItem('back');
 localStorage.removeItem('rodzaj');
 localStorage.removeItem('nazwa');
 localStorage.removeItem('atrakcje');
-Site.init = function() {
-	$.support.cors = true;
-	$.mobile.allowCrossDomainPages = true;
-	$.mobile.defaultPageTransition = 'slide';
-	$.mobile.orientationChangeEnabled = false;
+$( document ).one( "pagecreate", ".index", function() {
+	console.log("create index");
 	if (!localStorage.atrakcje) {
 		Site.wczytajDane();
 	} else {
@@ -46,6 +43,14 @@ Site.init = function() {
 		this.generatePolecamy();
 		this.generateList();
 	}
+});
+Site.init = function() {
+	console.log("init");
+	$.support.cors = true;
+	$.mobile.allowCrossDomainPages = true;
+	$.mobile.defaultPageTransition = 'slide';
+	$.mobile.orientationChangeEnabled = false;
+	
 	/*
 	$("body").on("swipeleft", function(event) {
 		console.log("swipe left");
@@ -167,26 +172,9 @@ Site.wczytajDaneAtrakcji = function() {
 Site.pokazAtrakcje = function() {
 	this.atrakcja = this.atrakcje[this.id_atrakcji];
 	$(".ui-page-active div[data-role='header'] h1").html(this.atrakcja.tytul);
-	$(".ui-page-active div.tresc .txt").html(this.atrakcja.tresc);
-	$('a', $(".ui-page-active div.tresc .txt")).contents().unwrap();
-	resize();
-	var wysTresci = $(".ui-page-active div.tresc").height();
-	var wysOkna = $(".ui-page-active div.tresc").parent().height() - 10;
-	var podstSzerOkna = $(".ui-page-active div.tresc").parent().parent().width();
-	//alert(wysTresci+' '+wysOkna+' '+podstSzerOkna);
-	if (wysTresci > wysOkna) {
-		var ileRazy = Math.ceil(wysTresci / wysOkna);
-		//alert(ileRazy);
-		$(".ui-page-active div.tresc").parent().parent().width(podstSzerOkna * ileRazy + 'px');
-		resize();
-		$(".ui-page-active div.tresc").attr("style", "-webkit-column-count:" + ileRazy);
-	}
-	//alert("tresc: "+$(".ui-page-active div.tresc").height());
-	//alert("wnetrze: "+$(".ui-page-active div.tresc").parent().height());
-	//alert("okno: "+$(".ui-page-active div.tresc").parent().parent().height());
-	//alert("ekran: "+$(".ui-page-active div.tresc").parent().parent().parent().height());
-	$(".ui-page-active div.tresc").parent().parent().width(podstSzerOkna * ileRazy + 'px');
-	$(".ui-page-active .hero.klik").css("background-image", "url(" + this.atrakcja.zdjecia.hero + ")");
+	$(".ui-page-active div#tresc").html(this.atrakcja.tresc);
+	$('a', $(".ui-page-active div#tresc")).contents().unwrap();
+	$(".ui-page-active div#zdjecie").css("background-image", "url(" + this.atrakcja.zdjecia.hero + ")");
 	if (this.atrakcja.szer_geogr) {
 		this.mapaGoogle();
 	}
@@ -207,15 +195,16 @@ Site.mapaGoogle = function() {
 	$("#google_maps").append(a);
 };
 Site.generatePolecamy = function() {
-	var i = 0;
+	var cel="polecamy";
 	for (a in this.atrakcje) {
 		if (this.atrakcje[a].wyrozniony) {
-			i++;
-			var inner = $('<a href="atrakcja.html?id=' + a + '"><img src="' + this.atrakcje[a].zdjecia.lista_glowna + '"> ' + '<h2>' + this.atrakcje[a].tytul + '</h2></a>');
-			var div = $("<div></div>").append(inner);
-			$(".polecamy").append(div);
+			var inner = $('<img src="' + this.atrakcje[a].zdjecia.lista + '"> ' + '<h2>' + this.atrakcje[a].tytul + '</h2>');
+			var tag = $('<a href="atrakcja.html?id=' + a + '"></a>').append(inner);
+			var li = $("<li data-id='" + a + "' data-rodzaj='" + this.atrakcje[a].rodzaj + "'></li>").append(tag);
+			$("#" + cel).append(li);
 		}
 	}
+	$("#" + cel).listview("refresh");
 };
 Site.generateList = function(cel) {
 	if (!cel)
@@ -273,6 +262,7 @@ Site.wczytajDane = function() {
 };
 
 function resize() {
+	return;
 	var szer = 0;
 	var wysOkna = $(window).height();
 	$(".ui-page-active div[data-role='okno']").each(function(index) {
