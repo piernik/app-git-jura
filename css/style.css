@@ -9,10 +9,19 @@ p.logo {
 	text-align:center;
 }
 .zdj {
-	height:300px;
+	/*height:300px;*/
 }
 .zdj img {
 	width:100%;
+}
+iframe.film {
+	display:block;
+	margin:auto;
+	margin-bottom:10px;
+	width:100%;
+	height:280px;
+	max-width:500px;
+	max-height:280px;
 }
 .hero {
 	background-size:cover;
@@ -26,6 +35,18 @@ p.logo {
 }
 .ui-listview li .ui-btn .ui-li-aside {
     color: #eee;
+}
+@media (max-width:480px) {
+	iframe.film {
+		max-width:375px;
+		max-height:210px;
+	}
+}
+@media (max-width:320px) {
+	iframe.film {
+		max-width:250px;
+		max-height:140px;
+	}
 }
 /* First breakpoint is 48em (768px). 3 column layout. Tiles 250x250 pixels incl. margin at the breakpoint. */
 @media ( min-width: 48em ) {
