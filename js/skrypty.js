@@ -149,19 +149,17 @@ Site.przygotujMape = function() {
 		zoom : 15,
 		center : myLatlng,
 		mapTypeId : google.maps.MapTypeId.ROADMAP,
-		mapTypeControl : true,
+		//mapTypeControl : true,
 	};
 	var markerBounds_wyszukiwarki = new google.maps.LatLngBounds();
+	var markery_wyszukiwarki=[];
 	Site.googleMap = new google.maps.Map(document.getElementById("google_maps"), myOptions);
 	for (a in this.atrakcje) {
 		if (this.atrakcje[a].x && this.atrakcje[a].y) {
 			var image = {
 		    url: this.atrakcje[a].zdjecia.lista,
-		    // This marker is 20 pixels wide by 32 pixels tall.
 		    size: new google.maps.Size(50,50),
-		    // The origin for this image is 0,0.
 		    origin: new google.maps.Point(0,0),
-		    // The anchor for this image is the base of the flagpole at 0,32.
 		    anchor: new google.maps.Point(25, 25),
 		    scaledSize: new google.maps.Size(50,50),
 		  };
@@ -185,11 +183,11 @@ Site.przygotujMape = function() {
 			});
 			markerBounds_wyszukiwarki.extend(point);
 		}
-		//break;
-		//markery_wyszukiwarki.push(marker);
+		markery_wyszukiwarki.push(marker);
 		//markery_wyszukiwarki[dane.i]=marker;
 	}
 	Site.googleMap.fitBounds(markerBounds_wyszukiwarki);
+	var markerCluster = new MarkerClusterer(Site.googleMap, markery_wyszukiwarki, {gridSize: 20});
 };
 Site.wczytajDaneAtrakcji = function() {
 	if (Site.atrakcje[Site.id_atrakcji].pelne_dane) {
