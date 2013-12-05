@@ -98,7 +98,11 @@ Site.init = function() {
 	$.mobile.defaultPageTransition = 'slide';
 	$.mobile.orientationChangeEnabled = false;
 	
-	
+	document.addEventListener("menubutton", function() {
+		if ($(".ui-page-active").jqmData("panel") !== "open") {
+			$(".ui-page-active #nav-panel").panel("open");
+		}
+	});
 	$(document).on("pageshow", function() {
 		//console.log("global pageshow");
 		localStorage.removeItem('back');
@@ -139,11 +143,6 @@ Site.init = function() {
 	 }
 	 */
 };
-document.addEventListener("menubutton", function() {
-	if ($(".ui-page-active").jqmData("panel") !== "open") {
-		$(".ui-page-active #nav-panel").panel("open");
-	}
-});
 $(window).on("navigate", function(event, data) {
 	//console.log("navigate");
 	if (data.state.direction == 'back') {
