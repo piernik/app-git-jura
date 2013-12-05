@@ -114,20 +114,19 @@ Site.init = function() {
 		Site.params = params;
 	});
 	/*
-	document.addEventListener("menubutton", onMenuKeyDown, false);
-	function onMenuKeyDown() {
-		if ($(".ui-page-active").jqmData("panel") !== "open") {
-			$("#nav-panel").panel("open");
-		}
-	}
-	*/
-	document.addEventListener("menubutton", function () {
-		alert("menu");
-		if ($(".ui-page-active").jqmData("panel") !== "open") {
-			$(".ui-page-active #nav-panel").panel("open");
-		}
-	});
+	 document.addEventListener("menubutton", onMenuKeyDown, false);
+	 function onMenuKeyDown() {
+	 if ($(".ui-page-active").jqmData("panel") !== "open") {
+	 $("#nav-panel").panel("open");
+	 }
+	 }
+	 */
 };
+document.addEventListener("menubutton", function() {
+	if ($(".ui-page-active").jqmData("panel") !== "open") {
+		$(".ui-page-active #nav-panel").panel("open");
+	}
+});
 $(window).on("navigate", function(event, data) {
 	//console.log("navigate");
 	if (data.state.direction == 'back') {
