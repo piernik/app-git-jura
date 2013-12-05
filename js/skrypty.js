@@ -101,11 +101,13 @@ Site.init = function() {
 		//console.log("global pageshow");
 		localStorage.removeItem('back');
 	});
-	$(document).on("swipeleft", function(e) {
-		if ($(".ui-page-active").jqmData("panel") !== "open") {
-			$(".ui-page-active #nav-panel").panel("open");
-		}
-	});
+	/*
+	 $(document).on("swipeleft", function(e) {
+	 if ($(".ui-page-active").jqmData("panel") !== "open") {
+	 $(".ui-page-active #nav-panel").panel("open");
+	 }
+	 });
+	 */
 	$(document).on('pagebeforechange', function(event, data) {
 		//console.log("pagebeforechange");
 		var url = data.absUrl.replace("#", "").split("?");
@@ -153,6 +155,16 @@ Site.przygotujMape = function() {
 	Site.googleMap = new google.maps.Map(document.getElementById("google_maps"), myOptions);
 	for (a in this.atrakcje) {
 		if (this.atrakcje[a].x && this.atrakcje[a].y) {
+			var image = {
+		    url: this.atrakcje[a].zdjecia.lista,
+		    // This marker is 20 pixels wide by 32 pixels tall.
+		    size: new google.maps.Size(50,50),
+		    // The origin for this image is 0,0.
+		    origin: new google.maps.Point(0,0),
+		    // The anchor for this image is the base of the flagpole at 0,32.
+		    anchor: new google.maps.Point(25, 25),
+		    scaledSize: new google.maps.Size(50,50),
+		  };
 			var point = new google.maps.LatLng(this.atrakcje[a].x, this.atrakcje[a].y);
 			//alert(dane.ikonka);
 			var marker = new google.maps.Marker({
@@ -160,16 +172,20 @@ Site.przygotujMape = function() {
 				map : Site.googleMap,
 				draggable : false,
 				title : this.atrakcje[a].tytul,
-				//icon: ikona_wyszukiwarki,
+				id : a,
+				icon: image,
 				//shadow: cien_wyszukiwarki,
-				animation : google.maps.Animation.DROP,
+				//animation : google.maps.Animation.DROP,
 			});
 			google.maps.event.addListener(marker, 'click', function() {
+				//alert('click');
 				//location.href=dane.link;
-				alert("id:"+this.atrakcje[a].id);
+				//alert("id:"+this.id);
+				$.mobile.navigate("atrakcja.html?id=" + this.id);
 			});
 			markerBounds_wyszukiwarki.extend(point);
 		}
+		//break;
 		//markery_wyszukiwarki.push(marker);
 		//markery_wyszukiwarki[dane.i]=marker;
 	}
