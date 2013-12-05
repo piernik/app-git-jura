@@ -78,9 +78,8 @@ $(document).on("pageshow", ".atrakcje", function() {
 	});
 });
 $(document).on("pageshow", ".atrakcja", function() {
-	console.log("show atrakcja");
-	console.log("ID: "+Site.params.id);
-	console.log("jest tresc:"+$("#tresc").length);
+	//console.log("show atrakcja");
+	//console.log("ID: "+Site.params.id);
 	Site.id_atrakcji = Site.params.id;
 	Site.wczytajDaneAtrakcji();
 });
@@ -132,10 +131,10 @@ $(window).on("navigate", function(event, data) {
 });
 Site.wczytajDaneAtrakcji = function() {
 	if (Site.atrakcje[Site.id_atrakcji].pelne_dane) {
-		console.log('Mam dane atrakcji');
+		//console.log('Mam dane atrakcji');
 		Site.pokazAtrakcje();
 	} else {
-		console.log('Wgrywam dane atrakcji z serwera');
+		//console.log('Wgrywam dane atrakcji z serwera');
 		$.mobile.loading("show", {
 			text : "Pobieram dane atrakcji",
 			textVisible : true,
@@ -156,12 +155,8 @@ Site.wczytajDaneAtrakcji = function() {
 	}
 };
 Site.pokazAtrakcje = function() {
-	console.log(this.id_atrakcji);
 	this.atrakcja = this.atrakcje[this.id_atrakcji];
-	console.log(this.atrakcja);
-	console.log("h1:"+$("div[data-role='header'] h1").length);
 	$(".ui-page-active div[data-role='header'] h1").html(this.atrakcja.tytul);
-	console.log("h1:"+$(".ui-page-active div[data-role='header'] h1").html());
 	$(".ui-page-active div#tresc").html(this.atrakcja.tresc);
 	$('a', $(".ui-page-active div#tresc")).contents().unwrap();
 	//$(".ui-page-active div#zdjecie").css("background-image", "url(" + this.atrakcja.zdjecia.glowne + ")");
