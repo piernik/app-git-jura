@@ -29,13 +29,13 @@ Site = {
 		22 : "Punkty na szlakach"
 	},
 	atrakcjeWgRodzajow : {},
-	params:{},
+	params : {},
 };
 localStorage.removeItem('back');
 localStorage.removeItem('rodzaj');
 localStorage.removeItem('nazwa');
 //localStorage.removeItem('atrakcje');
-$(document).one("pageshow", ".index", function() {
+$(document).one("pagebeforeshow", ".index", function() {
 	//console.log("show index");
 	if (!localStorage.atrakcje) {
 		Site.wczytajDane();
@@ -47,7 +47,7 @@ $(document).one("pageshow", ".index", function() {
 		Site.generateList();
 	}
 });
-$(document).on("pageshow", ".atrakcje", function() {
+$(document).on("pagebeforeshow", ".atrakcje", function() {
 	//console.log("show atrakcje");
 	Site.generateList("atrakcjeListaAtrakcji");
 	Site.filtrujWyniki();
@@ -77,10 +77,10 @@ $(document).on("pageshow", ".atrakcje", function() {
 		Site.filtrujWyniki();
 	});
 });
-$(document).on("pageshow", ".atrakcja", function() {
+$(document).on("pagebeforeshow", ".atrakcja", function() {
 	//console.log("show atrakcja");
 	if (Site.params.id) {
-		Site.id_atrakcji=Site.params.id;
+		Site.id_atrakcji = Site.params.id;
 		Site.wczytajDaneAtrakcji();
 	}
 });
@@ -90,28 +90,45 @@ Site.init = function() {
 	$.mobile.allowCrossDomainPages = true;
 	$.mobile.defaultPageTransition = 'slide';
 	$.mobile.orientationChangeEnabled = false;
-
+	$(document).on("swipeleft", function(e) {
+		// We check if there is no open panel on the page because otherwise
+		// a swipe to close the left panel would also open the right panel (and v.v.).
+		// We do this by checking the data that the framework stores on the page element (panel: open).
+		if ($(".ui-page-active").jqmData("panel") !== "open") {
+			$("#nav-panel").panel("open");
+		}
+	});
 	$(document).on("pageshow", function() {
 		//console.log("global pageshow");
 		localStorage.removeItem('back');
 	});
-	$(document).on('pagechange', function(event, data) {
-		//console.log("pagechange");
+	$(document).on('pagebeforechange', function(event, data) {
+		//console.log("pagebeforechange");
 		var url = data.absUrl.replace("#", "").split("?");
-		Site.params={};
+		Site.params = {};
 		var params = {};
 		if (url[1]) {
 			var parameters = url[1].split("&");
 			for (var p in parameters) {
 				var s = parameters[p].split("=");
 				params[s[0]] = s[1];
-				console.log("Param " + s[0] + ": " + s[1]);
+				//console.log("Param " + s[0] + ": " + s[1]);
 			}
 		}
-		Site.params=params;
+		Site.params = params;
 	});
+	document.addEventListener("menubutton", onMenuKeyDown, false);
+
+	function onMenuKeyDown() {
+		if ($(".ui-page-active").jqmData("panel") !== "open") {
+			$("#nav-panel").panel("open");
+		}
+
+	}
+
 };
 $(window).on("navigate", function(event, data) {
+	//console.log("navigate");
 	if (data.state.direction == 'back') {
 		localStorage.back = 1;
 	}
@@ -199,7 +216,7 @@ Site.filtrujWyniki = function() {
 		localStorage.rodzaj = rodzaj;
 		$("#atrakcjeListaAtrakcji li").filter(":not([data-rodzaj='" + rodzaj + "'])").hide();
 	}
-	console.log("LS.rodzaj: "+localStorage.rodzaj);
+	console.log("LS.rodzaj: " + localStorage.rodzaj);
 };
 Site.wczytajDane = function() {
 	$.mobile.loading("show", {
@@ -220,8 +237,8 @@ Site.wczytajDane = function() {
 		$.mobile.loading("hide");
 	});
 };
-Site.przygotujDane=function () {
-for (var d in Site.atrakcje) {
+Site.przygotujDane = function() {
+	for (var d in Site.atrakcje) {
 		var atr = Site.atrakcje[d];
 		if (!Site.atrakcjeWgRodzajow[atr.rodzaj])
 			Site.atrakcjeWgRodzajow[atr.rodzaj] = [];
@@ -229,7 +246,6 @@ for (var d in Site.atrakcje) {
 	}
 };
 
-
 jQuery.expr[':'].Contains = function(a, i, m) {
 	return (a.textContent || a.innerText || "").toUpperCase().indexOf(m[3].toUpperCase()) >= 0;
-};
+}; 

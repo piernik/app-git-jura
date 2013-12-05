@@ -1,5 +1,9 @@
 div[data-role='content'] {
-	margin-top:50px;
+	margin-top:40px;
+	padding:16px;
+}
+.ui-page-header-fullscreen > .ui-content, .ui-page-footer-fullscreen > .ui-content {
+	padding:16px;
 }
 p.logo {
 	text-align:center;
