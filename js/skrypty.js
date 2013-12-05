@@ -30,11 +30,16 @@ Site = {
 	},
 	atrakcjeWgRodzajow : {},
 	params : {},
+	mapa : {
+		poczX : 50.4539,
+		poczY : 19.549,
+	},
+	googleMap : null,
 };
 localStorage.removeItem('back');
 localStorage.removeItem('rodzaj');
 localStorage.removeItem('nazwa');
-//localStorage.removeItem('atrakcje');
+localStorage.removeItem('atrakcje');
 $(document).one("pageshow", ".index", function() {
 	//console.log("show index");
 	if (!localStorage.atrakcje) {
@@ -82,6 +87,9 @@ $(document).on("pageshow", ".atrakcja", function() {
 	//console.log("ID: "+Site.params.id);
 	Site.id_atrakcji = Site.params.id;
 	Site.wczytajDaneAtrakcji();
+});
+$(document).on("pageshow", ".mapa", function() {
+	Site.przygotujMape();
 });
 Site.init = function() {
 	//console.log("init");
@@ -133,6 +141,40 @@ $(window).on("navigate", function(event, data) {
 		localStorage.back = 1;
 	}
 });
+Site.przygotujMape = function() {
+	var myLatlng = new google.maps.LatLng(this.mapa.poczX, this.mapa.poczY);
+	var myOptions = {
+		zoom : 15,
+		center : myLatlng,
+		mapTypeId : google.maps.MapTypeId.ROADMAP,
+		mapTypeControl : true,
+	};
+	var markerBounds_wyszukiwarki = new google.maps.LatLngBounds();
+	Site.googleMap = new google.maps.Map(document.getElementById("google_maps"), myOptions);
+	for (a in this.atrakcje) {
+		if (this.atrakcje[a].x && this.atrakcje[a].y) {
+			var point = new google.maps.LatLng(this.atrakcje[a].x, this.atrakcje[a].y);
+			//alert(dane.ikonka);
+			var marker = new google.maps.Marker({
+				position : point,
+				map : Site.googleMap,
+				draggable : false,
+				title : this.atrakcje[a].tytul,
+				//icon: ikona_wyszukiwarki,
+				//shadow: cien_wyszukiwarki,
+				animation : google.maps.Animation.DROP,
+			});
+			google.maps.event.addListener(marker, 'click', function() {
+				//location.href=dane.link;
+				alert("id:"+this.atrakcje[a].id);
+			});
+			markerBounds_wyszukiwarki.extend(point);
+		}
+		//markery_wyszukiwarki.push(marker);
+		//markery_wyszukiwarki[dane.i]=marker;
+	}
+	Site.googleMap.fitBounds(markerBounds_wyszukiwarki);
+};
 Site.wczytajDaneAtrakcji = function() {
 	if (Site.atrakcje[Site.id_atrakcji].pelne_dane) {
 		//console.log('Mam dane atrakcji');
@@ -151,8 +193,8 @@ Site.wczytajDaneAtrakcji = function() {
 		}).done(function(dane) {
 			Site.atrakcje[Site.id_atrakcji].pelne_dane = true;
 			Site.atrakcje[Site.id_atrakcji].tresc = dane.tresc;
-			Site.atrakcje[Site.id_atrakcji].szer_geogr = dane.szer_geogr;
-			Site.atrakcje[Site.id_atrakcji].dl_geogr = dane.dl_geogr;
+			//Site.atrakcje[Site.id_atrakcji].szer_geogr = dane.szer_geogr;
+			//Site.atrakcje[Site.id_atrakcji].dl_geogr = dane.dl_geogr;
 			Site.pokazAtrakcje();
 			$.mobile.loading("hide");
 		});
@@ -166,10 +208,10 @@ Site.pokazAtrakcje = function() {
 	//$(".ui-page-active div#zdjecie").css("background-image", "url(" + this.atrakcja.zdjecia.glowne + ")");
 	var img = $("<img src='" + this.atrakcja.zdjecia.glowne + "'/>");
 	$(".ui-page-active div#zdjecie").append(img);
-	if (this.atrakcja.szer_geogr) {
+	if (this.atrakcja.x) {
 		var a = $("<a></a>");
-		$(a).attr("href", "geo:" + this.atrakcja.szer_geogr + "," + this.atrakcja.dl_geogr + "?z=15&q=" + this.atrakcja.szer_geogr + "," + this.atrakcja.dl_geogr + "(" + this.atrakcja.tytul + ")");
-		var imgSrc = "http://maps.googleapis.com/maps/api/staticmap?center=" + this.atrakcja.szer_geogr + "," + this.atrakcja.dl_geogr + "&zoom=15&size=400x300&maptype=roadmap&markers=color:blue%7C" + this.atrakcja.szer_geogr + "," + this.atrakcja.dl_geogr + "&sensor=false";
+		$(a).attr("href", "geo:" + this.atrakcja.x + "," + this.atrakcja.y + "?z=15&q=" + this.atrakcja.szer_geogr + "," + this.atrakcja.dl_geogr + "(" + this.atrakcja.tytul + ")");
+		var imgSrc = "http://maps.googleapis.com/maps/api/staticmap?center=" + this.atrakcja.x + "," + this.atrakcja.y + "&zoom=15&size=400x300&maptype=roadmap&markers=color:blue%7C" + this.atrakcja.x + "," + this.atrakcja.y + "&sensor=false";
 		var img = $("<img src='" + imgSrc + "'/>");
 		$(a).append(img);
 		$("#google_maps").append(a);

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+		<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+		<title>Mapa</title>
+		<link rel="stylesheet" href="css/jquery.mobile-1.4.0.css" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script src="js/jquery.js"></script>
+		<script src="js/jquery.mobile-1.4.0rc1.js"></script>
+		<script src="js/skrypty.js"></script>
+		
+		<script>
+			$(document).ready(function() {
+				Site.init();
+			});
+		</script>
+	</head>
+	<body>
+		<div data-role="page" class="mapa">
+			<div data-role="header" data-position="fixed" data-fullscreen="true">
+				<h1>Mapa</h1>
+				<a href="index.html" data-icon="back" data-rel="back" data-iconpos="notext">Back</a>
+				<a href="#nav-panel" data-icon="bars" data-iconpos="notext">Menu</a>
+			</div><!-- /header -->
+
+			<div data-role="content">
+				<div id="google_maps"></div>
+			</div>
+			<div data-role="panel" data-display="overlay" data-position="right" data-position-fixed="true" id="nav-panel">
+				<ul data-role="listview">
+				<li data-icon="arrow-l">
+					<a href="#" data-rel="close">Ukryj panel</a>
+					<li data-role="list-divider">Nawigacja</li>
+					<li data-icon="home"><a href="index.html">Strona główna</a></li>
+					<li data-icon="bullets"><a href="atrakcje.html">Atrakcje</a></li>
+					<li data-icon="video"><a href="filmy.html">Filmy</a></li>
+					<li data-role="list-divider">Opcje</li>
+					<li data-icon="delete"><a href="#" onclick="navigator.app.exitApp();">Zamknij program</a></li>
+				</ul>
+			</div><!-- /panel -->
+		</div>
+	</body>
+</html>

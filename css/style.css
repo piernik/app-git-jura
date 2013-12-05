@@ -23,6 +23,16 @@ iframe.film {
 	max-width:500px;
 	max-height:280px;
 }
+div.mapa[data-role="page"] div[data-role='content'] {
+	width:inherit;
+	min-height:inherit;
+	margin:0px;
+	padding:0px;
+}
+#google_maps {
+	width:inherit;
+	min-height:inherit;
+}
 .hero {
 	background-size:cover;
 	background-position-x: 50%;
