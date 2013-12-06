@@ -37,16 +37,16 @@ Site = {
 	},
 	googleMap : null,
 };
-var gaPlugin;
-function gaSuccessHandler() {};
-function gaErrorHandler(error) {alert("eror: "+error);};
+//var gaPlugin;
+//function gaSuccessHandler() {};
+//function gaErrorHandler(error) {alert("eror: "+error);};
 localStorage.removeItem('back');
 localStorage.removeItem('rodzaj');
 localStorage.removeItem('nazwa');
 //localStorage.removeItem('atrakcje');
 $(document).one("pageshow", ".index", function() {
 	//console.log("show index");
-	gaPlugin.trackPage( gaSuccessHandler, gaErrorHandler, "index.html");
+	//gaPlugin.trackPage( gaSuccessHandler, gaErrorHandler, "index.html");
 	if (!localStorage.atrakcje) {
 		Site.wczytajDane();
 	} else {
@@ -59,7 +59,7 @@ $(document).one("pageshow", ".index", function() {
 });
 $(document).on("pageshow", ".atrakcje", function() {
 	//console.log("show atrakcje");
-	gaPlugin.trackPage( gaSuccessHandler, gaErrorHandler, "atrakcje.html");
+	//gaPlugin.trackPage( gaSuccessHandler, gaErrorHandler, "atrakcje.html");
 	Site.generateList("atrakcjeListaAtrakcji");
 	Site.filtrujWyniki();
 	var option = $("<option value=''>Wszystkie</option>");
@@ -92,11 +92,11 @@ $(document).on("pageshow", ".atrakcja", function() {
 	//console.log("show atrakcja");
 	//console.log("ID: "+Site.params.id);
 	Site.id_atrakcji = Site.params.id;
-	gaPlugin.trackPage( gaSuccessHandler, gaErrorHandler, "index.html?id="+Site.id_atrakcji);
+	//gaPlugin.trackPage( gaSuccessHandler, gaErrorHandler, "index.html?id="+Site.id_atrakcji);
 	Site.wczytajDaneAtrakcji();
 });
 $(document).one("pageshow", ".mapa", function() {
-	gaPlugin.trackPage( gaSuccessHandler, gaErrorHandler, "mapa.html");
+	//gaPlugin.trackPage( gaSuccessHandler, gaErrorHandler, "mapa.html");
 	Site.przygotujMape();
 });
 $(document).one("pagecreate", ".zdjecia", function() {
@@ -155,7 +155,7 @@ $(document).on("pagecreate", ".zdjecia", function(event) {
 	else
 		Site.id_zdjecia = 0;
 	//console.log("Zdjęcie: " + Site.id_zdjecia);
-	gaPlugin.trackPage( gaSuccessHandler, gaErrorHandler, "zdjecia.html?idz="+Site.id_zdjecia);
+	//gaPlugin.trackPage( gaSuccessHandler, gaErrorHandler, "zdjecia.html?idz="+Site.id_zdjecia);
 	$(cel).css("background-image", "url(" + Site.atrakcje[Site.id_zdjecia].zdjecia.glowne + ")");
 	$("h1", cel).html(Site.atrakcje[Site.id_zdjecia].tytul);
 	$("#info", cel).on("click", function() {
@@ -195,11 +195,11 @@ Site.init = function() {
 	$.mobile.defaultPageTransition = 'slide';
 	$.mobile.orientationChangeEnabled = false;
 
-	alert('k');
-	gaPlugin = window.plugins.gaPlugin;
-	alert('k2');
-  gaPlugin.init(gaSuccessHandler, gaErrorHandler, "UA-112643-37", 10);
-  alert('k3');
+	//alert('k');
+	//gaPlugin = window.plugins.gaPlugin;
+	//alert('k2');
+  //gaPlugin.init(gaSuccessHandler, gaErrorHandler, "UA-112643-37", 10);
+  //alert('k3');
   //gaPlugin.trackEvent( gaSuccessHandler, gaErrorHandler, "Strona", "otworz", "index");
   //gaPlugin.trackPage( gaSuccessHandler, gaErrorHandler, "index.html");
   
