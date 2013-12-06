@@ -46,7 +46,7 @@ localStorage.removeItem('nazwa');
 //localStorage.removeItem('atrakcje');
 $(document).one("pageshow", ".index", function() {
 	//console.log("show index");
-	gaPlugin.trackEvent( gaSuccessHandler, gaErrorHandler, "Strona", "otworz", "index");
+	
 	if (!localStorage.atrakcje) {
 		Site.wczytajDane();
 	} else {
@@ -191,8 +191,9 @@ Site.init = function() {
 	$.mobile.defaultPageTransition = 'slide';
 	$.mobile.orientationChangeEnabled = false;
 
-	gaPlugin = window.plugins.gaPlugin;
-  gaPlugin.init(gaSuccessHandler, gaErrorHandler, "UA-112643-37", 10);
+	//gaPlugin = window.plugins.gaPlugin;
+  //gaPlugin.init(gaSuccessHandler, gaErrorHandler, "UA-112643-37", 10);
+  //gaPlugin.trackEvent( gaSuccessHandler, gaErrorHandler, "Strona", "otworz", "index");
   
   
 	document.addEventListener("menubutton", function() {
