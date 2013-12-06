@@ -39,7 +39,7 @@ Site = {
 };
 var gaPlugin;
 function gaSuccessHandler() {};
-function gaErrorHandler() {};
+function gaErrorHandler() {alert("eror: ");};
 localStorage.removeItem('back');
 localStorage.removeItem('rodzaj');
 localStorage.removeItem('nazwa');
