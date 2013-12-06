@@ -34,10 +34,15 @@ div.mapa[data-role="page"] div[data-role='content'] {
 	min-height:inherit;
 }
 .hero {
-	background-size:cover;
-	background-position-x: 50%;
-	background-position-y: 50%;
-	position:relative;
+	background-size: cover;
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+.control.ui-btn-right,
+.trivia-btn.ui-btn-left {
+	top: auto;
+	bottom: 7px;
+	margin: 0;
 }
 /* A bit custom styling */
 .ui-listview li .ui-btn p {

@@ -1,6 +1,7 @@
 Site = {
 	atrakcje : null,
 	id_atrakcji : null,
+	id_zdjecia : null,
 	atrakcja : null,
 	rodzaje : {
 		1 : "Zamki i twierdze",
@@ -91,13 +92,125 @@ $(document).on("pageshow", ".atrakcja", function() {
 $(document).one("pageshow", ".mapa", function() {
 	Site.przygotujMape();
 });
+$(document).one("pagecreate", ".zdjecia", function() {
+	console.log("ONE create zdjecia");
+	$(document).on("click", ".next", function() {
+		navnext(getNext());
+	});
+	$(document).on("click", ".prev", function() {
+		navprev(getPrev());
+	});
+	$(document).on("swipeleft", ".ui-page", function(event) {
+		if ((event.target === $( this )[0] )) {
+			navnext(getNext());
+		}
+	});
+	$(document).on("swiperight", ".ui-page", function(event) {
+		if ((event.target === $( this )[0] )) {
+			navprev(getPrev());
+		}
+	});
+	function navnext(next) {
+		console.log("navnext: " + next);
+		$(":mobile-pagecontainer").pagecontainer("change", "zdjecia.html?idz=" + next, {
+			transition : "slide"
+		});
+	}
+
+	function navprev(prev) {
+		console.log("navprev: " + prev);
+		$(":mobile-pagecontainer").pagecontainer("change", "zdjecia.html?idz=" + prev, {
+			transition : "slide",
+			reverse : true
+		});
+	}
+
+	function getNext() {
+		var next = parseInt(Site.id_zdjecia) + 1;
+		if (next > Site.atrakcje.length - 1)
+			next = 0;
+		return next;
+	}
+
+	function getPrev() {
+		var prev = parseInt(Site.id_zdjecia) - 1;
+		if (prev < 0)
+			prev = Site.atrakcje.length - 1;
+		return prev;
+	}
+
+});
+$(document).on("pagecreate", ".zdjecia", function(event) {
+	console.log("create zdjecia");
+	cel = $(event.target);
+	if (Site.params.idz)
+		Site.id_zdjecia = Site.params.idz;
+	else
+		Site.id_zdjecia = 0;
+	console.log("Zdjęcie: " + Site.id_zdjecia);
+	$(cel).css("background-image", "url(" + Site.atrakcje[Site.id_zdjecia].zdjecia.glowne + ")");
+	$("h1", cel).html(Site.atrakcje[Site.id_zdjecia].tytul);
+	$("#info", cel).on("click",function() {
+		//alert(Site.id_zdjecia);
+		$(":mobile-pagecontainer").pagecontainer("change", "atrakcja.html?id=" + Site.id_zdjecia, {
+			transition : "slide",
+			reverse : true
+		});
+	});
+	
+});
+$(document).on('pagebeforecreate', function(event, data) {
+	return;
+	console.log("!pagebeforecreate");
+	console.log($(this));
+	console.log($(this)[0]);
+	//console.log(event);
+	//console.log(data);
+	console.log($(this)[0].URL);
+	var url = $(this)[0].URL.replace("#", "").split("?");
+	console.log(url);
+	Site.params = {};
+	var params = {};
+	if (url[1]) {
+		var parameters = url[1].split("&");
+		for (var p in parameters) {
+			var s = parameters[p].split("=");
+			params[s[0]] = s[1];
+			console.log("Param " + s[0] + ": " + s[1]);
+		}
+	}
+	Site.params = params;
+
+});
+
+$(document).on('pagebeforechange', function(event, data) {
+	//return;
+	console.log("pagebeforechange");
+	//console.log(data);
+	if (data.absUrl) {
+		var url = data.absUrl.replace("#", "").split("?");
+		Site.params = {};
+		var params = {};
+		if (url[1]) {
+			var parameters = url[1].split("&");
+			for (var p in parameters) {
+				var s = parameters[p].split("=");
+				params[s[0]] = s[1];
+				//console.log("Param " + s[0] + ": " + s[1]);
+			}
+		}
+		Site.params = params;
+		console.log("Params: " + Site.params);
+	}
+});
+
 Site.init = function() {
 	//console.log("init");
 	$.support.cors = true;
 	$.mobile.allowCrossDomainPages = true;
 	$.mobile.defaultPageTransition = 'slide';
 	$.mobile.orientationChangeEnabled = false;
-	
+
 	document.addEventListener("menubutton", function() {
 		if ($(".ui-page-active").jqmData("panel") !== "open") {
 			$(".ui-page-active #nav-panel").panel("open");
@@ -114,37 +227,9 @@ Site.init = function() {
 	 }
 	 });
 	 */
-	$( document ).on( "pagecreate", function() {
-		//console.log($("#nav-panel").length);
-		//$( "body>[data-role='panel']" ).panel();
-		//$( "body > [data-role='panel'] [data-role='listview']" ).listview();
-	});
-	$(document).on('pagebeforechange', function(event, data) {
-		//console.log("pagebeforechange");
-		var url = data.absUrl.replace("#", "").split("?");
-		Site.params = {};
-		var params = {};
-		if (url[1]) {
-			var parameters = url[1].split("&");
-			for (var p in parameters) {
-				var s = parameters[p].split("=");
-				params[s[0]] = s[1];
-				console.log("Param " + s[0] + ": " + s[1]);
-			}
-		}
-		Site.params = params;
-	});
-	/*
-	 document.addEventListener("menubutton", onMenuKeyDown, false);
-	 function onMenuKeyDown() {
-	 if ($(".ui-page-active").jqmData("panel") !== "open") {
-	 $("#nav-panel").panel("open");
-	 }
-	 }
-	 */
+
 };
 $(window).on("navigate", function(event, data) {
-	//console.log("navigate");
 	if (data.state.direction == 'back') {
 		localStorage.back = 1;
 	}
@@ -158,17 +243,17 @@ Site.przygotujMape = function() {
 		//mapTypeControl : true,
 	};
 	var markerBounds_wyszukiwarki = new google.maps.LatLngBounds();
-	var markery_wyszukiwarki=[];
+	var markery_wyszukiwarki = [];
 	Site.googleMap = new google.maps.Map(document.getElementById("google_maps"), myOptions);
 	for (a in this.atrakcje) {
 		if (this.atrakcje[a].x && this.atrakcje[a].y) {
 			var image = {
-		    url: this.atrakcje[a].zdjecia.lista,
-		    size: new google.maps.Size(50,50),
-		    //origin: new google.maps.Point(25,25),
-		    anchor: new google.maps.Point(25, 25),
-		    scaledSize: new google.maps.Size(50,50),
-		  };
+				url : this.atrakcje[a].zdjecia.lista,
+				size : new google.maps.Size(50, 50),
+				//origin: new google.maps.Point(25,25),
+				anchor : new google.maps.Point(25, 25),
+				scaledSize : new google.maps.Size(50, 50),
+			};
 			var point = new google.maps.LatLng(this.atrakcje[a].x, this.atrakcje[a].y);
 			//alert(dane.ikonka);
 			var marker = new google.maps.Marker({
@@ -177,7 +262,7 @@ Site.przygotujMape = function() {
 				draggable : false,
 				title : this.atrakcje[a].tytul,
 				id : a,
-				icon: image,
+				icon : image,
 				//shadow: cien_wyszukiwarki,
 				//animation : google.maps.Animation.DROP,
 			});
@@ -190,7 +275,9 @@ Site.przygotujMape = function() {
 		//markery_wyszukiwarki[dane.i]=marker;
 	}
 	Site.googleMap.fitBounds(markerBounds_wyszukiwarki);
-	var markerCluster = new MarkerClusterer(Site.googleMap, markery_wyszukiwarki, {gridSize: 20});
+	var markerCluster = new MarkerClusterer(Site.googleMap, markery_wyszukiwarki, {
+		gridSize : 20
+	});
 };
 Site.wczytajDaneAtrakcji = function() {
 	if (Site.atrakcje[Site.id_atrakcji].pelne_dane) {
@@ -227,7 +314,7 @@ Site.pokazAtrakcje = function() {
 	var img = $("<img src='" + this.atrakcja.zdjecia.glowne + "'/>");
 	$(".ui-page-active .atr_zdjecie").append(img);
 	if (this.atrakcja.x) {
-		var div=$("<div></div>");
+		var div = $("<div></div>");
 		$(div).addClass("zdj atr_google_maps");
 		var a = $("<a></a>");
 		$(a).attr("href", "geo:" + this.atrakcja.x + "," + this.atrakcja.y + "?z=15&q=" + this.atrakcja.szer_geogr + "," + this.atrakcja.dl_geogr + "(" + this.atrakcja.tytul + ")");
@@ -314,3 +401,66 @@ Site.przygotujDane = function() {
 jQuery.expr[':'].Contains = function(a, i, m) {
 	return (a.textContent || a.innerText || "").toUpperCase().indexOf(m[3].toUpperCase()) >= 0;
 };
+
+jQuery.fn.extend({
+	/**
+	 * Returns get parameters.
+	 *
+	 * If the desired param does not exist, null will be returned
+	 *
+	 * To get the document params:
+	 * @example value = $(document).getUrlParam("paramName");
+	 *
+	 * To get the params of a html-attribut (uses src attribute)
+	 * @example value = $('#imgLink').getUrlParam("paramName");
+	 */
+	getUrlParam : function(strParamName) {
+		strParamName = escape(unescape(strParamName));
+
+		var returnVal = new Array();
+		var qString = null;
+
+		if ($(this).attr("nodeName") == "#document") {
+			//document-handler
+
+			if (window.location.search.search(strParamName) > -1) {
+
+				qString = window.location.search.substr(1, window.location.search.length).split("&");
+			}
+
+		} else if ($(this).attr("src") != "undefined") {
+
+			var strHref = $(this).attr("src")
+			if (strHref.indexOf("?") > -1) {
+				var strQueryString = strHref.substr(strHref.indexOf("?") + 1);
+				qString = strQueryString.split("&");
+			}
+		} else if ($(this).attr("href") != "undefined") {
+
+			var strHref = $(this).attr("href")
+			if (strHref.indexOf("?") > -1) {
+				var strQueryString = strHref.substr(strHref.indexOf("?") + 1);
+				qString = strQueryString.split("&");
+			}
+		} else {
+			return null;
+		}
+
+		if (qString == null)
+			return null;
+
+		for (var i = 0; i < qString.length; i++) {
+			if (escape(unescape(qString[i].split("=")[0])) == strParamName) {
+				returnVal.push(qString[i].split("=")[1]);
+			}
+
+		}
+
+		if (returnVal.length == 0)
+			return null;
+		else if (returnVal.length == 1)
+			return returnVal[0];
+		else
+			return returnVal;
+	}
+});
