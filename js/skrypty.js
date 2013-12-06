@@ -40,7 +40,7 @@ Site = {
 localStorage.removeItem('back');
 localStorage.removeItem('rodzaj');
 localStorage.removeItem('nazwa');
-localStorage.removeItem('atrakcje');
+//localStorage.removeItem('atrakcje');
 $(document).one("pageshow", ".index", function() {
 	//console.log("show index");
 	if (!localStorage.atrakcje) {
@@ -93,7 +93,7 @@ $(document).one("pageshow", ".mapa", function() {
 	Site.przygotujMape();
 });
 $(document).one("pagecreate", ".zdjecia", function() {
-	console.log("ONE create zdjecia");
+	//console.log("ONE create zdjecia");
 	$(document).on("click", ".next", function() {
 		navnext(getNext());
 	});
@@ -141,52 +141,29 @@ $(document).one("pagecreate", ".zdjecia", function() {
 
 });
 $(document).on("pagecreate", ".zdjecia", function(event) {
-	console.log("create zdjecia");
+	//console.log("create zdjecia");
 	cel = $(event.target);
 	if (Site.params.idz)
 		Site.id_zdjecia = Site.params.idz;
 	else
 		Site.id_zdjecia = 0;
-	console.log("Zdjęcie: " + Site.id_zdjecia);
+	//console.log("Zdjęcie: " + Site.id_zdjecia);
 	$(cel).css("background-image", "url(" + Site.atrakcje[Site.id_zdjecia].zdjecia.glowne + ")");
 	$("h1", cel).html(Site.atrakcje[Site.id_zdjecia].tytul);
-	$("#info", cel).on("click",function() {
-		//alert(Site.id_zdjecia);
+	$("#info", cel).on("click", function() {
 		$(":mobile-pagecontainer").pagecontainer("change", "atrakcja.html?id=" + Site.id_zdjecia, {
 			transition : "slide",
 			reverse : true
 		});
 	});
-	
 });
-$(document).on('pagebeforecreate', function(event, data) {
-	return;
-	console.log("!pagebeforecreate");
-	console.log($(this));
-	console.log($(this)[0]);
-	//console.log(event);
-	//console.log(data);
-	console.log($(this)[0].URL);
-	var url = $(this)[0].URL.replace("#", "").split("?");
-	console.log(url);
-	Site.params = {};
-	var params = {};
-	if (url[1]) {
-		var parameters = url[1].split("&");
-		for (var p in parameters) {
-			var s = parameters[p].split("=");
-			params[s[0]] = s[1];
-			console.log("Param " + s[0] + ": " + s[1]);
-		}
+$(window).on("navigate", function(event, data) {
+	if (data.state.direction == 'back') {
+		localStorage.back = 1;
 	}
-	Site.params = params;
-
 });
-
 $(document).on('pagebeforechange', function(event, data) {
-	//return;
-	console.log("pagebeforechange");
-	//console.log(data);
+	//console.log("pagebeforechange");
 	if (data.absUrl) {
 		var url = data.absUrl.replace("#", "").split("?");
 		Site.params = {};
@@ -196,11 +173,10 @@ $(document).on('pagebeforechange', function(event, data) {
 			for (var p in parameters) {
 				var s = parameters[p].split("=");
 				params[s[0]] = s[1];
-				//console.log("Param " + s[0] + ": " + s[1]);
 			}
 		}
 		Site.params = params;
-		console.log("Params: " + Site.params);
+		//console.log("Params: " + Site.params);
 	}
 });
 
@@ -220,20 +196,16 @@ Site.init = function() {
 		//console.log("global pageshow");
 		localStorage.removeItem('back');
 	});
-	/*
-	 $(document).on("swipeleft", function(e) {
-	 if ($(".ui-page-active").jqmData("panel") !== "open") {
-	 $(".ui-page-active #nav-panel").panel("open");
-	 }
-	 });
-	 */
-
 };
-$(window).on("navigate", function(event, data) {
-	if (data.state.direction == 'back') {
-		localStorage.back = 1;
-	}
-});
+
+Site.pobierzAtrakcjePonownie = function() {
+	localStorage.removeItem('atrakcje');
+	Site.atrakcjeWgRodzajow = {};
+	Site.atrakcje = {};
+	Site.wczytajDane();
+	$(".index #polecamy").html("");
+	$(":mobile-pagecontainer").pagecontainer("change", "index.html");
+};
 Site.przygotujMape = function() {
 	var myLatlng = new google.maps.LatLng(this.mapa.poczX, this.mapa.poczY);
 	var myOptions = {
@@ -306,7 +278,7 @@ Site.wczytajDaneAtrakcji = function() {
 };
 Site.pokazAtrakcje = function() {
 	this.atrakcja = this.atrakcje[this.id_atrakcji];
-	console.log(this.atrakcja);
+	//console.log(this.atrakcja);
 	$(".ui-page-active div[data-role='header'] h1").html(this.atrakcja.tytul);
 	$(".ui-page-active div#tresc").html(this.atrakcja.tresc);
 	$('a', $(".ui-page-active div#tresc")).contents().unwrap();
