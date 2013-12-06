@@ -19,8 +19,12 @@
 		<div data-role="page" class="zdjecia hero">
 			<div data-role="header" data-position="fixed" data-fullscreen="true" data-tap-toggle="false">
 				<h1>Zdjęcia</h1>
-				<a href="index.html" data-icon="home" data-iconpos="notext">Home</a>
-				<a href="#nav-panel" data-icon="bars" data-iconpos="notext">Menu</a>
+				<div data-role="controlgroup" data-type="horizontal" class="ui-mini ui-btn-left">
+					<a href="index.html" data-role="button" data-icon="back" data-rel="back" data-iconpos="notext">Back</a>
+	        <a href="index.html" data-role="button" data-icon="home" data-iconpos="notext">Home</a>
+	    	</div>
+				
+				<a href="#nav-panel" class="ui-btn-right" data-icon="bars" data-iconpos="notext">Menu</a>
 			</div><!-- /header -->
 
 			<div role="main" class="ui-content"></div>

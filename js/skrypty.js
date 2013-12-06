@@ -310,14 +310,16 @@ Site.pokazAtrakcje = function() {
 	$(".ui-page-active div[data-role='header'] h1").html(this.atrakcja.tytul);
 	$(".ui-page-active div#tresc").html(this.atrakcja.tresc);
 	$('a', $(".ui-page-active div#tresc")).contents().unwrap();
-	//$(".ui-page-active div#zdjecie").css("background-image", "url(" + this.atrakcja.zdjecia.glowne + ")");
+	var a = $("<a></a>");
+	$(a).attr("href", "zdjecia.html?idz=" + this.id_atrakcji);
 	var img = $("<img src='" + this.atrakcja.zdjecia.glowne + "'/>");
-	$(".ui-page-active .atr_zdjecie").append(img);
+	$(a).append(img);
+	$(".ui-page-active .atr_zdjecie").append(a);
 	if (this.atrakcja.x) {
 		var div = $("<div></div>");
 		$(div).addClass("zdj atr_google_maps");
 		var a = $("<a></a>");
-		$(a).attr("href", "geo:" + this.atrakcja.x + "," + this.atrakcja.y + "?z=15&q=" + this.atrakcja.szer_geogr + "," + this.atrakcja.dl_geogr + "(" + this.atrakcja.tytul + ")");
+		$(a).attr("href", "geo:" + this.atrakcja.x + "," + this.atrakcja.y + "?z=15&q=" + this.atrakcja.x + "," + this.atrakcja.y + "(" + this.atrakcja.tytul + ")");
 		var imgSrc = "http://maps.googleapis.com/maps/api/staticmap?center=" + this.atrakcja.x + "," + this.atrakcja.y + "&zoom=15&size=400x300&maptype=roadmap&markers=color:blue%7C" + this.atrakcja.x + "," + this.atrakcja.y + "&sensor=false";
 		var img = $("<img src='" + imgSrc + "'/>");
 		$(a).append(img);
