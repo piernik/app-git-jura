@@ -191,9 +191,13 @@ Site.init = function() {
 	$.mobile.defaultPageTransition = 'slide';
 	$.mobile.orientationChangeEnabled = false;
 
-	//gaPlugin = window.plugins.gaPlugin;
-  //gaPlugin.init(gaSuccessHandler, gaErrorHandler, "UA-112643-37", 10);
-  //gaPlugin.trackEvent( gaSuccessHandler, gaErrorHandler, "Strona", "otworz", "index");
+	alert('k');
+	gaPlugin = window.plugins.gaPlugin;
+	alert('k2');
+  gaPlugin.init(gaSuccessHandler, gaErrorHandler, "UA-112643-37", 10);
+  alert('k3');
+  gaPlugin.trackEvent( gaSuccessHandler, gaErrorHandler, "Strona", "otworz", "index");
+  alert('k4');
   
   
 	document.addEventListener("menubutton", function() {
