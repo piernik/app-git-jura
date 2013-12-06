@@ -37,4 +37,5 @@
 		<gap:splash src="img/splash/android/xhdpi.png" gap:platform="android" gap:density="xhdpi" />
 
     <gap:platform name="android" />
+    <gap:plugin name="com.adobe.plugins.gaplugin" />
 </widget>
